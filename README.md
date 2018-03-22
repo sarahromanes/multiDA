@@ -2,17 +2,27 @@
 
 High Dimensional Discriminant Analysis using Multiple Hypothesis Testing
 
-## Getting Started
+##Overview
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+**multiDA** is a Discriminant Analysis (DA) algorithm capable for use in high dimensional datasets, providing feature selection through multiple hypothesis testing. This algorithm has minimal tuning parameters, is easy to use, and offers improvement in speed compared to existing DA classifiers.
 
-### Prerequisites
 
-What things you need to install the software and how to install them
+
+Installation
+--------
+
+```r
+# Install the development version from GitHub:
+# install.packages("devtools")
+devtools::install_github("sarahromanes/multiDA")
 
 ```
-Give examples
-```
+
+
+Usage
+-----
+
+The following example uses multiDA...
 
 ## Authors
 
