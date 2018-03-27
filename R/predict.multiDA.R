@@ -6,6 +6,7 @@
 #' @param newdata matrix of observations to predict. Each row corresponds to a new observation.
 #' @return list predicted class memberships of each row in newdata
 #' @export
+#'
 
 
 predict.multiDA <-function(object, newdata, ...){
@@ -48,7 +49,7 @@ predict.multiDA <-function(object, newdata, ...){
   {
     vx <- matrix(newdata[i, ], object$p, 1)
     mX.til <- vx %*% matrix(1, 1, object$V)
-    for (k in 1:K)
+    for (k in 1:object$K)
     {
       mMu <- object$res$mMu[, ind.mat[k, ]]
       mD <- mX.til - mMu

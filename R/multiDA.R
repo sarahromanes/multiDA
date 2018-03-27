@@ -12,15 +12,13 @@
 
 
 #' @examples
-#' n <- nrow(iris)
-#' train <- sample(seq_len(n), n / 2)
-#' dlda_out <- dlda(Species ~ ., data = iris[train, ])
-#' predicted <- predict(dlda_out, iris[-train, -5])$class
-#'
-#' dlda_out2 <- dlda(x = iris[train, -5], y = iris[train, 5])
-#' predicted2 <- predict(dlda_out2, iris[-train, -5])$class
-#' all.equal(predicted, predicted2)
-
+#' #train the multiDA classifier using the SRBCT dataset, and find the resubstitution error rate
+#' data(SRBCT)
+#' vy <- SRBCT$vy
+#' mX <-SRBCT$mX
+#' res <- multiDA(vy, mX, penalty="GIC-4", equal.var=TRUE, set.options="exhaustive")
+#' vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
+#' rser <- sum(vals!=vy)/length(vy)
 
 #' @rdname multiDA
 #' @export
