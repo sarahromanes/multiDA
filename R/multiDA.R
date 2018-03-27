@@ -14,9 +14,9 @@
 #' @examples
 #' #train the multiDA classifier using the SRBCT dataset, and find the resubstitution error rate
 #' data(SRBCT)
-#' vy <- SRBCT$vy
-#' mX <-SRBCT$mX
-#' res <- multiDA(vy, mX, penalty="GIC-4", equal.var=TRUE, set.options="exhaustive")
+#' vy   <- SRBCT$vy
+#' mX   <- SRBCT$mX
+#' res  <- multiDA(vy, mX, penalty="GIC-4", equal.var=TRUE, set.options="exhaustive")
 #' vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
 #' rser <- sum(vals!=vy)/length(vy)
 
