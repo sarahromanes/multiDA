@@ -26,7 +26,7 @@
 #' @export
 
 
-multiDA.default <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5", "GIC-6","Chi-Sq"),
+multiDA <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5", "GIC-6","Chi-Sq"),
                     pen.options=NULL, equal.var, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "restrict", "user"),
                     MAXGROUPS=NULL, sUser=NULL){
 
@@ -172,111 +172,7 @@ multiDA.default <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "G
 
 
 
-#' multiDA prediction of the class membership of a matrix of new observations.
-#'
-#' @export
-#' @rdname multiDA
-#' @param object trained multiDA object
-#' @param newdata matrix of observations to predict. Each row corresponds to a new observation.
-#' @return list predicted class memberships of each row in newdata
-#' @export
-
-
-predict.multiDA <-function(object, newdata, ...){
-  # Fit class probabilities
-
-  if (!inherits(object, "multiDA"))  {
-    stop("object not of class 'multiDA'")
-  }
-  if (is.vector(newdata)) {
-    #newdata <- as.matrix(newdata)
-    newdata <- matrix(newdata, 1, object$p)
-  }
-
-  n.test <- nrow(newdata)
-
-  ##################################################
-
-  rho.y <- colMeans(object$mY)
-
-  ###################################################
-
-  mA <- c(0, cumsum(apply(object$mS, 2, max)))
-  ind.mat <- matrix(0, nrow = object$K, ncol = object$V)
-  for (s in 1:object$V)
-  {
-    G <- max(object$mS[, s])
-    mA.sub <- (mA[s] + 1):mA[s + 1]
-    for (g in 1:G)
-    {
-      inds <- which(object$mS[, s] == g)
-      ind.mat[inds, s] <- mA.sub[g]
-    }
-  }
-
-  ###################################################
-
-  mEta.y <- matrix(0, n.test, object$K)
-
-  for (i in 1:n.test)
-  {
-    vx <- matrix(newdata[i, ], object$p, 1)
-    mX.til <- vx %*% matrix(1, 1, object$V)
-    for (k in 1:K)
-    {
-      mMu <- object$res$mMu[, ind.mat[k, ]]
-      mD <- mX.til - mMu
-      if (!object$equal.var) {
-        # multiQDA
-        mSig2 <- object$res$mSigma2[, ind.mat[k, ]]
-        mL <- object$res$mGamma * (-0.5 * log(mSig2) - 0.5 * mD * mD / mSig2)
-      } else {
-        # multiLDA
-        mL <- object$res$mGamma * (-0.5 * mD * mD / object$res$mSigma2)
-      }
-      mEta.y[i, k] <- sum(mL[, -1]) + rho.y[k] * log(rho.y[k])
-    }
-  }
-
-  mY.hat<- .logMatToGamma(mEta.y)
-  vy.pred <- apply(mY.hat, 1, which.max)
-
-  if(object$fac.input){
-    vy.fac=object$vy.fac
-
-    .num.2.fac=function(x){
-      dat=as.numeric(unique(vy.fac))
-      names(dat)=unique(vy.fac)
-      val=names(which(dat==x))
-      return(val)
-    }
-
-    vy.pred=as.factor(map_chr(vy.pred, .num.2.fac))
-  }
-
-  return(list(vy.pred = vy.pred, probabilities=mY.hat))
-
-}
 
 
 
-#' Outputs the summary for a DLDA classifier object.
-#'
-#' Summarizes the trained DLDA classifier in a nice manner.
-#'
-#' @param x object to print
-#' @param ... unused
-#' @export
-print.dlda <- function(x, ...) {
-  cat("Call:\n")
-  print(x$call)
-  cat("Sample Size:\n")
-  print(x$N)
-  cat("Number of Features:\n")
-  print(x$p)
-  cat("Classes:\n")
-  print(x$groups)
-  cat("Prior Probabilities:\n")
-  print(sapply(x$est, function(z) z$prior))
-}
 
