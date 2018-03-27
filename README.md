@@ -39,7 +39,7 @@ rser <- sum(vals!=vy)/length(vy)
 ## Authors
 
 * **Sarah Romanes**  - [@sarah_romanes](https://twitter.com/sarah_romanes)
-* **John Ormerod**   - [@john_ormerod](https://twitter.com/john_t_ormerod)
+* **John Ormerod**   - [@john_t_ormerod](https://twitter.com/john_t_ormerod)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
