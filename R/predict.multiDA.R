@@ -69,16 +69,16 @@ predict.multiDA <-function(object, newdata, ...){
   vy.pred <- apply(mY.hat, 1, which.max)
 
   if(object$fac.input){
-    vy.fac=object$vy.fac
+    vy.fac <- object$vy.fac
 
     .num.2.fac=function(x){
-      dat=as.numeric(unique(vy.fac))
-      names(dat)=unique(vy.fac)
+      dat <- as.numeric(unique(vy.fac))
+      names(dat) <- unique(vy.fac)
       val=names(which(dat==x))
       return(val)
     }
 
-    vy.pred=as.factor(map_chr(vy.pred, .num.2.fac))
+    vy.pred<-as.factor(map_chr(vy.pred, .num.2.fac))
   }
 
   return(list(vy.pred = vy.pred, probabilities=mY.hat))

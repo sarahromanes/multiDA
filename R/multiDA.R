@@ -33,7 +33,7 @@ multiDA <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "
   vy.fac=NULL
 
   if(fac.input){
-    vy.fac=vy
+    vy.fac <- vy
   }
 
 
