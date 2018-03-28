@@ -76,7 +76,7 @@
 
 
       n.til <- length(inds)
-      mM[, g] <- matrixStats::colMeans(mX[inds, ])
+      mM[, g] <- matrixStats::colMeans2(mX[inds, ])
       mD[, g] <- matrixStats::colVars(mX[inds, ]) * (n.til - 1)
     }
 
@@ -134,7 +134,7 @@
       inds <- which(matrixStats::rowSums2(mY.til) == 1)
 
       n.til <- length(inds)
-      mM[, g] <- matrixStats::colMeans(mX[inds, ])
+      mM[, g] <- matrixStats::colMeans2(mX[inds, ])
       mD[, g] <- matrixStats::colVars(mX[inds, ]) * (n.til - 1) / n.til
     }
 
