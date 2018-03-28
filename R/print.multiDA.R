@@ -5,7 +5,7 @@
 #' @param object object to print
 #' @param max.rank number of significant features to display. If \code{"ALL"}, all features are displayed.
 #' @export
-print.multiDA <- function(object, max.rank) {
+print.multiDA <- function(object, max.rank=10) {
 
   if (!inherits(object, "multiDA"))  {
     stop("object not of class 'multiDA'")

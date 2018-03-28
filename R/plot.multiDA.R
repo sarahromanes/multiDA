@@ -9,7 +9,7 @@
 #' @export
 #'
 
-plot.multiDA<-function(object, ranks, save.plot=TRUE){
+plot.multiDA<-function(object, ranks=1:10, save.plot=FALSE){
 
   if (!inherits(object, "multiDA"))  {
     stop("object not of class 'multiDA'")

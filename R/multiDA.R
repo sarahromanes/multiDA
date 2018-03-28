@@ -25,7 +25,7 @@
 
 
 multiDA <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5", "GIC-6","Chi-Sq"),
-                    pen.options=NULL, equal.var, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "restrict", "user"),
+                    pen.options=NULL, equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "restrict", "user"),
                     MAXGROUPS=NULL, sUser=NULL){
 
   fac.input=is.factor(vy)
