@@ -13,5 +13,4 @@ Imports:
     partitions,
     matrixStats,
     ggplot2
-Depends:
-    purrr
+
