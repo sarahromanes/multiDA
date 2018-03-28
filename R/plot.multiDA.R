@@ -46,7 +46,7 @@ for(s in 1:ncol(object$mS)){
 
       if(object$fac.input){
         vy.fac <- object$vy.fac
-        labels<-map_chr(inds, .num.2.fac, vy.fac)
+        labels<-purrr::map_chr(inds, .num.2.fac, vy.fac)
       }else{
         labels<-inds
       }
