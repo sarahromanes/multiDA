@@ -26,10 +26,10 @@
 .logMatToGamma <- function(log.mA) {
   R <- nrow(log.mA)
   C <- ncol(log.mA)
-  vm <- rowMaxs(log.mA)
+  vm <- matrixStats::rowMaxs(log.mA)
   mM <- matrix(vm, R, C, byrow = FALSE)
   mA.til <- exp(log.mA - mM)
-  vs <- rowSums(mA.til)
+  vs <- matrixStats::rowSums(mA.til)
   mS <- matrix(vs, R, C, byrow = FALSE)
   mGamma <- mA.til / mS
   return(mGamma)
@@ -71,13 +71,13 @@
       grp <- which(vs == g)
       siz <- length(grp)
       mY.til <- matrix(mY[, grp], n, siz)
-      inds <- which(rowSums(mY.til) == 1)
+      inds <- which(matrixStats::rowSums(mY.til) == 1)
 
       n.til <- length(inds)
-      mM[, g] <- colMeans(mX[inds, ])
-      mD[, g] <- colVars(mX[inds, ]) * (n.til - 1)
+      mM[, g] <- matrixStats::colMeans(mX[inds, ])
+      mD[, g] <- matrixStats::colVars(mX[inds, ]) * (n.til - 1)
     }
-    mSigma2[, v] <- rowSums(mD) / n
+    mSigma2[, v] <- matrixStats::rowSums(mD) / n
     mMu[, (vp[v] + 1):vp[v + 1]] <- mM
   }
 
@@ -126,11 +126,11 @@
       grp <- which(vs == g)
       siz <- length(grp)
       mY.til <- matrix(mY[, grp], n, siz)
-      inds <- which(rowSums(mY.til) == 1)
+      inds <- which(matrixStats::rowSums(mY.til) == 1)
 
       n.til <- length(inds)
-      mM[, g] <- colMeans(mX[inds, ])
-      mD[, g] <- colVars(mX[inds, ]) * (n.til - 1) / n.til
+      mM[, g] <- matrixStats::colMeans(mX[inds, ])
+      mD[, g] <- matrixStats::colVars(mX[inds, ]) * (n.til - 1) / n.til
     }
 
     mSigma2[, (vp[v] + 1):vp[v + 1]] <- mD + 1.0E-8
@@ -153,11 +153,11 @@
       grp <- which(vs == g)
       siz <- length(grp)
       mY.til <- matrix(mY[, grp], n, siz)
-      inds <- which(rowSums(mY.til) == 1)
+      inds <- which(matrixStats::rowSums(mY.til) == 1)
       n.til <- length(inds)
       veta[, g] <- -0.5 * n.til * log(mS2[, g])
     }
-    mEta[, v] <- rowSums(veta)
+    mEta[, v] <- matrixStats::rowSums(veta)
   }
 
   mLambda <- 2 * (mEta - mEta[, 1]) - matrix(vpen, p, V, byrow = TRUE)

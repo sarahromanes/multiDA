@@ -16,7 +16,6 @@ predict.multiDA <-function(object, newdata, ...){
     stop("object not of class 'multiDA'")
   }
   if (is.vector(newdata)) {
-    #newdata <- as.matrix(newdata)
     newdata <- matrix(newdata, 1, object$p)
   }
 
@@ -70,7 +69,7 @@ predict.multiDA <-function(object, newdata, ...){
 
   if(object$fac.input){
     vy.fac <- object$vy.fac
-    vy.pred<-as.factor(map_chr(vy.pred, .num.2.fac,vy.fac))
+    vy.pred<-as.factor(purrr::map_chr(vy.pred, .num.2.fac,vy.fac))
   }
 
   return(list(vy.pred = vy.pred, probabilities=mY.hat))

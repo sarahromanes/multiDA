@@ -25,7 +25,7 @@
 
 
 multiDA <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5", "GIC-6","Chi-Sq"),
-                    pen.options=NULL, equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "restrict", "user"),
+                    pen.options=NULL, equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"),
                     MAXGROUPS=NULL, sUser=NULL){
 
   fac.input=is.factor(vy)
@@ -36,6 +36,8 @@ multiDA <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "
     vy.fac <- vy
   }
 
+  #Make column names for mX unique
+  colnames(mX)<-make.unique(colnames(mX))
 
   # Turn vy into a binary matrix of indicators
   mY <- .vec2mat(vy)
@@ -53,14 +55,14 @@ multiDA <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "
 
 
   if (set.options == "exhaustive") {
-    mS <- setparts(K)
+    mS <- partitions::setparts(K)
     mS <- apply(mS, 2, .reord)
     mS <- mS
   }
 
   # Reduce the set of tests if the classes are ordinal
   if (set.options == "ordinal") {
-    mS <- setparts(K)
+    mS <- partitions::setparts(K)
     mS <- apply(mS, 2, .reord)
     mD <- apply(mS, 2, diff)
     mS <- mS[, apply(mD, 2, .allpositive)]
@@ -80,14 +82,8 @@ multiDA <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "
   # Find the number of groups in each partition
   vg <- apply(mS, 2, max)
 
-  # Restrict the number of groups
-  if (set.options == "restrict") {
-    #MAXGROUPS <- 2
-    mS <- mS[, vg <= MAXGROUPS]
-    mS <- cbind(1, 1:K)
-  }
-
   if (set.options == "user") {
+    mS <- partitions::setparts(K)
     # check user matrix is subset of S matrix
     check <- all(sUser %in% mS)
     if (check == FALSE) {
@@ -163,7 +159,8 @@ multiDA <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "
 
   ##############################################
 
-  obj <- (list(mS = mS,res=res, n=n, K=K, V=V, p=p, vnu=vnu, vg=vg, vpen=vpen, fac.input=fac.input, mY=mY, vy.fac=vy.fac, equal.var=equal.var, mX=mX))
+  obj <- (list(mS = mS,res=res, n=n, K=K, V=V, p=p, vnu=vnu, vg=vg, vpen=vpen, fac.input=fac.input, mY=mY, vy.fac=vy.fac,
+               equal.var=equal.var, mX=mX,set.options=set.options))
   class(obj) <- "multiDA"
   return(obj)
 }

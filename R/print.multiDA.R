@@ -16,17 +16,17 @@ print.multiDA <- function(object, max.rank=10) {
     rownames(object$res$mGamma)<-as.character(1:nrow(object$res$mGamma))
     colnames(object$mX)<-rownames(object$res$mGamma)
   }else{
-    rownames(object$res$mGamma)<-colnames(object$mX)
+    rownames(object$res$mGamma)<-make.unique(colnames(object$mX))
   }
 
   inds<-which(apply(object$res$mGamma,1,which.max)!=1) #non null cases
   est.gamma<-apply(object$res$mGamma[inds,],1,max)
 
-  df<-data.frame("rank"=rank(-est.gamma), "gamma.hat"=est.gamma,"partition"=apply(object$res$mGamma,1,which.max)[inds])
-
+  df<-data.frame("rank"=rank(-est.gamma),"gamma.hat"=est.gamma,"partition"=apply(object$res$mGamma,1,which.max)[inds])
+  
   df<-df[order(df$rank),]
 
-  if(max.rank!="ALL"){
+  if(max.rank!="ALL" & nrow(df)>=max.rank){
     df<-df[1:max.rank, ]
   }
 
@@ -36,10 +36,13 @@ print.multiDA <- function(object, max.rank=10) {
   print(object$p)
   cat("Classes:\n")
   print(object$K)
+  cat("Equal Variance Assumption:\n")
+  print(object$equal.var)
   cat("Number of Significant Features:\n")
   print(sum(apply(object$res$mGamma,1,which.max)!=1))
   cat("Summary of Significant Features:\n")
   print(df)
   cat("Partition Matrix:\n")
+  print(object$set.options)
   print(object$mS)
 }
