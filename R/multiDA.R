@@ -37,8 +37,9 @@ multiDA <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "
   }
 
   #Make column names for mX unique
-  colnames(mX)<-make.unique(colnames(mX))
-
+  if(is.null(colnames(mX))==FALSE){
+    colnames(mX)<-make.unique(colnames(mX))
+  }
   # Turn vy into a binary matrix of indicators
   mY <- .vec2mat(vy)
 
