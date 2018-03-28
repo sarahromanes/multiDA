@@ -182,4 +182,14 @@
 
 ##############################################################
 
+.num.2.fac=function(x, vy.fac){
+  dat <- as.numeric(unique(vy.fac))
+  names(dat) <- unique(vy.fac)
+  val=names(which(dat==x))
+  return(val)
+}
+
+
+################################################################
+
 
