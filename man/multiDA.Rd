@@ -8,11 +8,11 @@
 \title{multiDA}
 \usage{
 multiDA(vy, mX, penalty = c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5",
-  "GIC-6", "Chi-Sq"), pen.options = NULL, equal.var,
-  set.options = c("exhaustive", "onevsrest", "onevsall", "ordinal",
-  "restrict", "user"), MAXGROUPS = NULL, sUser = NULL)
+  "GIC-6", "Chi-Sq"), pen.options = NULL, equal.var = TRUE,
+  set.options = c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"),
+  MAXGROUPS = NULL, sUser = NULL)
 
-\method{plot}{multiDA}(object, ranks, save.plot = TRUE)
+\method{plot}{multiDA}(object, ranks = 1:10, save.plot = FALSE)
 
 \method{predict}{multiDA}(object, newdata, ...)
 }

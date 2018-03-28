@@ -29,6 +29,10 @@ plot.multiDA<-function(object, ranks=1:10, save.plot=FALSE){
   df<-data.frame("est.gamma"=est.gamma, "rank"=rank(-est.gamma),"partition"=apply(object$res$mGamma,1,which.max)[inds])
   df<-df[order(df$rank),]
 
+  if(nrow(df)<max(ranks)){
+    ranks=1:nrow(df)
+  }
+
 ###########################################################
 
 G=apply(object$mS, 2, max)
@@ -75,19 +79,19 @@ for(j in 1:nrow(df)){
 
 p=function(x){
 
-  p1<-ggplot(data[[x]],aes(x=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
+  p1<-ggplot2::ggplot(data[[x]],aes(x=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
       ggtitle(paste("Feature:", rownames(df)[x], ", Rank:", df$rank[x], ", gamma.hat=",signif(df$est.gamma[x],4)))+
       scale_colour_brewer(palette="Dark2")+
       scale_fill_brewer(palette="Dark2")
   if(save.plot==TRUE){
     p1
-    ggsave(paste("multiDA-feature-rank",x,".pdf"))
+    ggplot2::ggsave(paste("multiDA-feature-rank",x,".pdf"))
   }
   else{
     p1
   }
 }
 
-return(map(ranks, p))
+return(purrr::map(ranks, p))
 }
 
