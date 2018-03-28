@@ -163,7 +163,7 @@ multiDA <- function(vy, mX, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "
 
   ##############################################
 
-  obj <- (list(mS = mS,res=res, n=n, K=K, V=V, p=p, vnu=vnu, vg=vg, vpen=vpen, fac.input=fac.input, mY=mY, vy.fac=vy.fac, equal.var=equal.var))
+  obj <- (list(mS = mS,res=res, n=n, K=K, V=V, p=p, vnu=vnu, vg=vg, vpen=vpen, fac.input=fac.input, mY=mY, vy.fac=vy.fac, equal.var=equal.var, mX=mX))
   class(obj) <- "multiDA"
   return(obj)
 }
