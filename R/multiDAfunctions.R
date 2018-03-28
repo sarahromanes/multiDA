@@ -29,7 +29,7 @@
   vm <- matrixStats::rowMaxs(log.mA)
   mM <- matrix(vm, R, C, byrow = FALSE)
   mA.til <- exp(log.mA - mM)
-  vs <- matrixStats::rowSums22(mA.til)
+  vs <- matrixStats::rowSums2(mA.til)
   mS <- matrix(vs, R, C, byrow = FALSE)
   mGamma <- mA.til / mS
   return(mGamma)
