@@ -71,13 +71,17 @@
       grp <- which(vs == g)
       siz <- length(grp)
       mY.til <- matrix(mY[, grp], n, siz)
+
       inds <- which(matrixStats::rowSums2(mY.til) == 1)
+
 
       n.til <- length(inds)
       mM[, g] <- matrixStats::colMeans(mX[inds, ])
       mD[, g] <- matrixStats::colVars(mX[inds, ]) * (n.til - 1)
     }
+
     mSigma2[, v] <- matrixStats::rowSums2(mD) / n
+
     mMu[, (vp[v] + 1):vp[v + 1]] <- mM
   }
 
@@ -126,6 +130,7 @@
       grp <- which(vs == g)
       siz <- length(grp)
       mY.til <- matrix(mY[, grp], n, siz)
+
       inds <- which(matrixStats::rowSums2(mY.til) == 1)
 
       n.til <- length(inds)
