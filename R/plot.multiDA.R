@@ -15,6 +15,7 @@ plot.multiDA<-function(object, ranks, save.plot=TRUE){
     stop("object not of class 'multiDA'")
   }
 
+
   if(is.null(colnames(object$mX))){
     rownames(object$res$mGamma)<-as.character(1:nrow(object$res$mGamma))
     colnames(object$mX)<-rownames(object$res$mGamma)
@@ -29,7 +30,6 @@ plot.multiDA<-function(object, ranks, save.plot=TRUE){
   df<-df[order(df$rank),]
 
 ###########################################################
-
 
 G=apply(object$mS, 2, max)
 mC=object$mS
