@@ -79,7 +79,7 @@ for(j in 1:nrow(df)){
 
 p=function(r){
 
-  p1<-ggplot2::ggplot(data[[r]],aes(r=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
+  p1<-ggplot2::ggplot(data[[r]],aes(x=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
       ggtitle(paste("Feature:", rownames(df)[r], ", Rank:", df$rank[r], ", gamma.hat=",signif(df$est.gamma[r],4)))+
       scale_colour_brewer(palette="Dark2")+
       scale_fill_brewer(palette="Dark2")
