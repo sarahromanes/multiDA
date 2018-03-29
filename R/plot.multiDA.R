@@ -2,31 +2,31 @@
 #'
 #' @export
 #' @rdname multiDA
-#' @param object trained multiDA object
+#' @param x trained multiDA object
 #' @param ranks a vector of which ranked features should be plot
 #' @param save.plot logical value indicating whether plots should be saved (\code{TRUE}) or plotted on graphics device (\code{FALSE})
 #' @return plots
 #' @export
 #'
 
-plot.multiDA<-function(object, ranks=1:10, save.plot=FALSE){
+plot.multiDA<-function(x, ranks=1:10, save.plot=FALSE){
 
-  if (!inherits(object, "multiDA"))  {
-    stop("object not of class 'multiDA'")
+  if (!inherits(x, "multiDA"))  {
+    stop("x not of class 'multiDA'")
   }
 
 
-  if(is.null(colnames(object$mX))){
-    rownames(object$res$mGamma)<-as.character(1:nrow(object$res$mGamma))
-    colnames(object$mX)<-rownames(object$res$mGamma)
+  if(is.null(colnames(x$mX))){
+    rownames(x$res$mGamma)<-as.character(1:nrow(x$res$mGamma))
+    colnames(x$mX)<-rownames(x$res$mGamma)
   }else{
-    rownames(object$res$mGamma)<-colnames(object$mX)
+    rownames(x$res$mGamma)<-colnames(x$mX)
   }
 
-  inds<-which(apply(object$res$mGamma,1,which.max)!=1) #non null cases
-  est.gamma<-apply(object$res$mGamma[inds,],1,max)
+  inds<-which(apply(x$res$mGamma,1,which.max)!=1) #non null cases
+  est.gamma<-apply(x$res$mGamma[inds,],1,max)
 
-  df<-data.frame("est.gamma"=est.gamma, "rank"=rank(-est.gamma),"partition"=apply(object$res$mGamma,1,which.max)[inds])
+  df<-data.frame("est.gamma"=est.gamma, "rank"=rank(-est.gamma),"partition"=apply(x$res$mGamma,1,which.max)[inds])
   df<-df[order(df$rank),]
 
   if(nrow(df)<max(ranks)){
@@ -35,17 +35,17 @@ plot.multiDA<-function(object, ranks=1:10, save.plot=FALSE){
 
 ###########################################################
 
-G=apply(object$mS, 2, max)
-mC=object$mS
+G=apply(x$mS, 2, max)
+mC=x$mS
 
-for(s in 1:ncol(object$mS)){
+for(s in 1:ncol(x$mS)){
   for (g in 1:G[s]){
-    inds=which(object$mS[,s]==g)
+    inds=which(x$mS[,s]==g)
     vals=c()
     for(i in 1:length(inds)){
 
-      if(object$fac.input){
-        vy.fac <- object$vy.fac
+      if(x$fac.input){
+        vy.fac <- x$vy.fac
         labels<-purrr::map_chr(inds, .num.2.fac, vy.fac)
       }else{
         labels<-inds
@@ -67,25 +67,25 @@ for(s in 1:ncol(object$mS)){
 data=list()
 
 for(j in 1:nrow(df)){
-  vs=object$mS[,df$partition[j]]
+  vs=x$mS[,df$partition[j]]
   vc=mC[,df$partition[j]]
-  vy=.mat2vec(object$mY)
+  vy=.mat2vec(x$mY)
   grouping=vc[vy]
-  value=object$mX[, rownames(df)[j]]
+  value=x$mX[, rownames(df)[j]]
   rank.feature <- rep(j, length(vy))
   dat=data.frame(value, grouping, rank.feature)
   data[[j]]<-dat
 }
 
-p=function(x){
+p=function(r){
 
-  p1<-ggplot2::ggplot(data[[x]],aes(x=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
-      ggtitle(paste("Feature:", rownames(df)[x], ", Rank:", df$rank[x], ", gamma.hat=",signif(df$est.gamma[x],4)))+
+  p1<-ggplot2::ggplot(data[[r]],aes(r=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
+      ggtitle(paste("Feature:", rownames(df)[r], ", Rank:", df$rank[r], ", gamma.hat=",signif(df$est.gamma[r],4)))+
       scale_colour_brewer(palette="Dark2")+
       scale_fill_brewer(palette="Dark2")
   if(save.plot==TRUE){
     p1
-    ggplot2::ggsave(paste("multiDA-feature-rank",x,".pdf"))
+    ggplot2::ggsave(paste("multiDA-feature-rank",r,".pdf"))
   }
   else{
     p1

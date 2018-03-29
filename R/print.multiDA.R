@@ -2,28 +2,28 @@
 #'
 #' Summarizes the trained multiDA classifier in a nice manner. User can select number of features to summarise
 #'
-#' @param object object to print
+#' @param x object to print
 #' @param max.rank number of significant features to display. If \code{"ALL"}, all features are displayed.
 #' @export
-print.multiDA <- function(object, max.rank=10) {
+print.multiDA <- function(x, max.rank=10) {
 
-  if (!inherits(object, "multiDA"))  {
-    stop("object not of class 'multiDA'")
+  if (!inherits(x, "multiDA"))  {
+    stop("x not of class 'multiDA'")
   }
 
 
-  if(is.null(colnames(object$mX))){
-    rownames(object$res$mGamma)<-as.character(1:nrow(object$res$mGamma))
-    colnames(object$mX)<-rownames(object$res$mGamma)
+  if(is.null(colnames(x$mX))){
+    rownames(x$res$mGamma)<-as.character(1:nrow(x$res$mGamma))
+    colnames(x$mX)<-rownames(x$res$mGamma)
   }else{
-    rownames(object$res$mGamma)<-make.unique(colnames(object$mX))
+    rownames(x$res$mGamma)<-make.unique(colnames(x$mX))
   }
 
-  inds<-which(apply(object$res$mGamma,1,which.max)!=1) #non null cases
-  est.gamma<-apply(object$res$mGamma[inds,],1,max)
+  inds<-which(apply(x$res$mGamma,1,which.max)!=1) #non null cases
+  est.gamma<-apply(x$res$mGamma[inds,],1,max)
 
-  df<-data.frame("rank"=rank(-est.gamma),"gamma.hat"=est.gamma,"partition"=apply(object$res$mGamma,1,which.max)[inds])
-  
+  df<-data.frame("rank"=rank(-est.gamma),"gamma.hat"=est.gamma,"partition"=apply(x$res$mGamma,1,which.max)[inds])
+
   df<-df[order(df$rank),]
 
   if(max.rank!="ALL" & nrow(df)>=max.rank){
@@ -31,18 +31,18 @@ print.multiDA <- function(object, max.rank=10) {
   }
 
   cat("Sample Size:\n")
-  print(object$n)
+  print(x$n)
   cat("Number of Features:\n")
-  print(object$p)
+  print(x$p)
   cat("Classes:\n")
-  print(object$K)
+  print(x$K)
   cat("Equal Variance Assumption:\n")
-  print(object$equal.var)
+  print(x$equal.var)
   cat("Number of Significant Features:\n")
-  print(sum(apply(object$res$mGamma,1,which.max)!=1))
+  print(sum(apply(x$res$mGamma,1,which.max)!=1))
   cat("Summary of Significant Features:\n")
   print(df)
   cat("Partition Matrix:\n")
-  print(object$set.options)
-  print(object$mS)
+  print(x$set.options)
+  print(x$mS)
 }
