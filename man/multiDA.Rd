@@ -7,27 +7,27 @@
 \alias{predict.multiDA}
 \title{multiDA}
 \usage{
-multiDA(vy, mX, penalty = c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5",
+multiDA(mX, vy, penalty = c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5",
   "GIC-6", "Chi-Sq"), pen.options = NULL, equal.var = TRUE,
   set.options = c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"),
-  MAXGROUPS = NULL, sUser = NULL)
+  sUser = NULL)
 
 \method{plot}{multiDA}(x, ranks = 1:10, save.plot = FALSE)
 
 \method{predict}{multiDA}(object, newdata, ...)
 }
 \arguments{
-\item{vy}{vector of class values (for training)}
-
 \item{mX}{matrix containing the training data. The rows are the sample observations, and the columns are the features.}
 
-\item{penalty}{choice of penalty for use in training. Options include \code{"AIC"}, \code{"BIC"}}
+\item{vy}{vector of class values (for training)}
 
-\item{pen.options}{if \code{"user"} is selected for \code{penalty}, pen options....}
+\item{penalty}{choice of penalty for use in training. Options include \code{"AIC"}, \code{"BIC"},}
 
 \item{equal.var}{a \code{LOGICAL} value, indicating whether group specific variances should be equal or allowed to vary.}
 
 \item{set.options}{options for set partition matrix S.}
+
+\item{sUser}{if \code{set.options=user}, \code{sUser} is a user input matrix for paritions to be considered. \code{sUser} MUST be a subset of \code{set.options="exhaustive}.}
 
 \item{x}{trained multiDA object}
 
