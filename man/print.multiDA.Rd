@@ -4,10 +4,10 @@
 \alias{print.multiDA}
 \title{Outputs the summary for a multiDA classifier object.}
 \usage{
-\method{print}{multiDA}(object, max.rank = 10)
+\method{print}{multiDA}(x, max.rank = 10)
 }
 \arguments{
-\item{object}{object to print}
+\item{x}{object to print}
 
 \item{max.rank}{number of significant features to display. If \code{"ALL"}, all features are displayed.}
 }

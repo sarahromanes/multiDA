@@ -12,7 +12,7 @@ multiDA(vy, mX, penalty = c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5",
   set.options = c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"),
   MAXGROUPS = NULL, sUser = NULL)
 
-\method{plot}{multiDA}(object, ranks = 1:10, save.plot = FALSE)
+\method{plot}{multiDA}(x, ranks = 1:10, save.plot = FALSE)
 
 \method{predict}{multiDA}(object, newdata, ...)
 }
@@ -29,15 +29,15 @@ multiDA(vy, mX, penalty = c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5",
 
 \item{set.options}{options for set partition matrix S.}
 
-\item{object}{trained multiDA object}
+\item{x}{trained multiDA object}
 
 \item{ranks}{a vector of which ranked features should be plot}
 
 \item{save.plot}{logical value indicating whether plots should be saved (\code{TRUE}) or plotted on graphics device (\code{FALSE})}
 
-\item{newdata}{matrix of observations to predict. Each row corresponds to a new observation.}
-
 \item{object}{trained multiDA object}
+
+\item{newdata}{matrix of observations to predict. Each row corresponds to a new observation.}
 }
 \value{
 \code{multiDA} object that contains the trained multiDA classifier
