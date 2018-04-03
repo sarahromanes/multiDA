@@ -1,4 +1,4 @@
-multiDA <img src="man/figures/test_logo.png" align="right"  height="250" width="220"/>
+multiDA <img src="man/figures/test_logo.png" align="right"  height="250" width="230"/>
 ======================================================
 
 High Dimensional Discriminant Analysis using Multiple Hypothesis Testing
