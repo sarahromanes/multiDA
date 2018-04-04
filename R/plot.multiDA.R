@@ -34,65 +34,65 @@ plot.multiDA<-function(x, ranks=1:10, save.plot=FALSE, ...){
     ranks=1:nrow(df)
   }
 
-###########################################################
+  ###########################################################
 
-G=apply(x$mS, 2, max)
-mC=x$mS
+  G=apply(x$mS, 2, max)
+  mC=x$mS
 
-for(s in 1:ncol(x$mS)){
-  for (g in 1:G[s]){
-    inds=which(x$mS[,s]==g)
-    vals=c()
-    for(i in 1:length(inds)){
+  for(s in 1:ncol(x$mS)){
+    for (g in 1:G[s]){
+      inds=which(x$mS[,s]==g)
+      vals=c()
+      for(i in 1:length(inds)){
 
-      if(x$fac.input){
-        vy.fac <- x$vy.fac
-        labels<-purrr::map_chr(inds, .num.2.fac, vy.fac)
-      }else{
-        labels<-inds
+        if(x$fac.input){
+          vy.fac <- x$vy.fac
+          labels<-purrr::map_chr(inds, .num.2.fac, vy.fac)
+        }else{
+          labels<-inds
+        }
+
+        if(i==length(inds)){
+          vals[i]=as.character(labels[i])
+        }else{
+          vals[i]=as.character(paste(labels[i], "+ "))
+        }
       }
-
-      if(i==length(inds)){
-        vals[i]=as.character(labels[i])
-      }else{
-      vals[i]=as.character(paste(labels[i], "+ "))
-      }
+      mC[inds,s]=paste(vals,collapse="")
     }
-    mC[inds,s]=paste(vals,collapse="")
   }
-}
 
-#############################################################
+  #############################################################
 
 
-data=list()
+  data=list()
 
-for(j in 1:nrow(df)){
-  vs=x$mS[,df$partition[j]]
-  vc=mC[,df$partition[j]]
-  vy=.mat2vec(x$mY)
-  grouping=vc[vy]
-  value=x$mX[, rownames(df)[j]]
-  rank.feature <- rep(j, length(vy))
-  dat=data.frame(value, grouping, rank.feature)
-  data[[j]]<-dat
-}
+  for(j in 1:nrow(df)){
+    vs=x$mS[,df$partition[j]]
+    vc=mC[,df$partition[j]]
+    vy=.mat2vec(x$mY)
+    grouping=vc[vy]
+    value=x$mX[, rownames(df)[j]]
+    rank.feature <- rep(j, length(vy))
+    dat=data.frame(value, grouping, rank.feature)
+    data[[j]]<-dat
+  }
 
-p=function(r){
+  p=function(r){
 
-  p1<-ggplot2::ggplot(data[[r]],aes(x=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
+    p1<-ggplot2::ggplot(data[[r]],aes(x=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
       ggtitle(paste("Feature:", rownames(df)[r], ", Rank:", df$rank[r], ", gamma.hat=",signif(df$est.gamma[r],4)))+
       scale_colour_brewer(palette="Dark2")+
       scale_fill_brewer(palette="Dark2")
-  if(save.plot==TRUE){
-    p1
-    ggplot2::ggsave(paste("multiDA-feature-rank",r,".pdf"))
+    if(save.plot==TRUE){
+      p1
+      ggplot2::ggsave(paste("multiDA-feature-rank",r,".pdf"))
+    }
+    else{
+      p1
+    }
   }
-  else{
-    p1
-  }
-}
 
-return(purrr::map(ranks, p))
+  return(purrr::map(ranks, p))
 }
 
