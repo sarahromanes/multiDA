@@ -1,13 +1,12 @@
 #' the multiDA function
 #'
 #' @title multiDA
-#' @export
 #' @param mX matrix containing the training data. The rows are the sample observations, and the columns are the features.
 #' @param vy vector of class values (for training)
-#' @param penalty choice of penalty for use in training. Options include \code{"AIC"}, \code{"BIC"},
+#' @param penalty choice of penalty for use in training. Options include \code{"AIC"}, \code{"BIC"}....
 #' @param equal.var a \code{LOGICAL} value, indicating whether group specific variances should be equal or allowed to vary.
 #' @param set.options options for set partition matrix S.
-#' @param sUser if \code{set.options=user}, \code{sUser} is a user input matrix for paritions to be considered. \code{sUser} MUST be a subset of \code{set.options="exhaustive}.
+#' @param sUser if \code{set.options} is set to \code{"user"}, \code{sUser} is a user input matrix for paritions to be considered. \code{sUser} MUST be a subset of the full partition matrix..
 #' @return \code{multiDA} object that contains the trained multiDA classifier
 
 
@@ -23,10 +22,8 @@
 #' @rdname multiDA
 #' @export
 
-
 multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5", "GIC-6","Chi-Sq"),
-                    pen.options=NULL, equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"),
-                    sUser=NULL){
+                    pen.options=NULL, equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"), sUser=NULL){
 
   fac.input=is.factor(vy)
 

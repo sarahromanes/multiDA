@@ -12,7 +12,7 @@ multiDA(mX, vy, penalty = c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5",
   set.options = c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"),
   sUser = NULL)
 
-\method{plot}{multiDA}(x, ranks = 1:10, save.plot = FALSE)
+\method{plot}{multiDA}(x, ranks = 1:10, save.plot = FALSE, ...)
 
 \method{predict}{multiDA}(object, newdata, ...)
 }
@@ -21,19 +21,21 @@ multiDA(mX, vy, penalty = c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5",
 
 \item{vy}{vector of class values (for training)}
 
-\item{penalty}{choice of penalty for use in training. Options include \code{"AIC"}, \code{"BIC"},}
+\item{penalty}{choice of penalty for use in training. Options include \code{"AIC"}, \code{"BIC"}....}
 
 \item{equal.var}{a \code{LOGICAL} value, indicating whether group specific variances should be equal or allowed to vary.}
 
 \item{set.options}{options for set partition matrix S.}
 
-\item{sUser}{if \code{set.options=user}, \code{sUser} is a user input matrix for paritions to be considered. \code{sUser} MUST be a subset of \code{set.options="exhaustive}.}
+\item{sUser}{if \code{set.options} is set to \code{"user"}, \code{sUser} is a user input matrix for paritions to be considered. \code{sUser} MUST be a subset of the full partition matrix..}
 
 \item{x}{trained multiDA object}
 
 \item{ranks}{a vector of which ranked features should be plot}
 
 \item{save.plot}{logical value indicating whether plots should be saved (\code{TRUE}) or plotted on graphics device (\code{FALSE})}
+
+\item{...}{Any other variables which will be ignored}
 
 \item{object}{trained multiDA object}
 
