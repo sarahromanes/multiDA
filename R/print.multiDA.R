@@ -4,8 +4,9 @@
 #'
 #' @param x object to print
 #' @param max.rank number of significant features to display. If \code{"ALL"}, all features are displayed.
+#' @param ... Any other variables which will be ignored.
 #' @export
-print.multiDA <- function(x, max.rank=10) {
+print.multiDA <- function(x, max.rank=10,...) {
 
   if (!inherits(x, "multiDA"))  {
     stop("x not of class 'multiDA'")

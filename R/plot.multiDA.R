@@ -5,11 +5,12 @@
 #' @param x trained multiDA object
 #' @param ranks a vector of which ranked features should be plot
 #' @param save.plot logical value indicating whether plots should be saved (\code{TRUE}) or plotted on graphics device (\code{FALSE})
+#' @param ... Any other variables which will be ignored
 #' @return plots
 #' @export
 #'
 
-plot.multiDA<-function(x, ranks=1:10, save.plot=FALSE){
+plot.multiDA<-function(x, ranks=1:10, save.plot=FALSE, ...){
 
   if (!inherits(x, "multiDA"))  {
     stop("x not of class 'multiDA'")
