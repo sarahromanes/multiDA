@@ -8,9 +8,8 @@
 \title{multiDA}
 \usage{
 multiDA(mX, vy, penalty = c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5",
-  "GIC-6", "Chi-Sq"), pen.options = NULL, equal.var = TRUE,
-  set.options = c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"),
-  sUser = NULL)
+  "GIC-6", "Chi-Sq"), equal.var = TRUE, set.options = c("exhaustive",
+  "onevsrest", "onevsall", "ordinal", "user"), sUser = NULL)
 
 \method{plot}{multiDA}(x, ranks = 1:10, save.plot = FALSE, ...)
 
