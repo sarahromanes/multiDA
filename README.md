@@ -27,7 +27,6 @@ Usage
 The following example trains the multiDA classifier using the SRBCT dataset, and finds the resubstitution error rate. 
 
 ```r
-data(SRBCT)
 vy   <- SRBCT$vy
 mX   <- SRBCT$mX
 res  <- multiDA(mX, vy, penalty="GIC-4", equal.var=TRUE, set.options="exhaustive")
