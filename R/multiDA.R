@@ -22,7 +22,7 @@
 #' @rdname multiDA
 #' @export
 
-multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5", "GIC-6","Chi-Sq"),
+multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5", "GIC-6","Chi-Sq", "TEST"),
                   equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"), sUser=NULL){
 
   fac.input=is.factor(vy)
@@ -142,8 +142,8 @@ multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "G
     # GIC pen 6
     vpen <- vnu*log(n)*log(p*vg)
 
-  } else if (penalty == "user") {
-    vpen <- pen.options[1] * vnu + pen.options[2]
+  } else if (penalty == "TEST") {
+    vpen <- 0.5*vnu*log(n)+log(p)
   }
   vpen[1] <- 0
 

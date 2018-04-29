@@ -95,4 +95,3 @@ plot.multiDA<-function(x, ranks=1:10, save.plot=FALSE, ...){
 
   return(purrr::map(ranks, p))
 }
-
