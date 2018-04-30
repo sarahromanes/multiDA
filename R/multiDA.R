@@ -33,10 +33,14 @@ multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "G
     vy.fac <- vy
   }
 
-  #Make column names for mX unique
-  if(is.null(colnames(mX))==FALSE){
+  # Generate column names for mX and/or make column names for mX unique
+
+  if(is.null(colnames(mX))){
+    colnames(mX)<-paste("V",1:ncol(mX), sep="")
+  }else{
     colnames(mX)<-make.unique(colnames(mX))
   }
+
   # Turn vy into a binary matrix of indicators
   mY <- .vec2mat(vy)
 
@@ -157,7 +161,18 @@ multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "G
 
   ##############################################
 
-  obj <- (list(mS = mS,res=res, n=n, K=K, V=V, p=p, vnu=vnu, vg=vg, vpen=vpen, fac.input=fac.input, mY=mY, vy.fac=vy.fac,
+  #Generate rankings to either be used by print() or plot(), or for further analysis by the user
+
+  inds<-which(apply(res$mGamma,1,which.max)!=1) #non null cases
+  est.gamma<-apply(res$mGamma[inds,],1,max)
+
+  mR<-data.frame("rank"=rank(-est.gamma),"feature ID" = colnames(mX)[inds],"gamma.hat"=est.gamma,"partition"=apply(res$mGamma,1,which.max)[inds])
+  mR<-mR[order(mR$rank),]
+  rownames(mR)<-c()
+
+  #####################################################
+
+  obj <- (list(mS = mS,res=res, mGamma=res$mGamma, mR=mR,n=n, K=K, V=V, p=p, vnu=vnu, vg=vg, vpen=vpen, fac.input=fac.input, mY=mY, vy.fac=vy.fac,
                equal.var=equal.var, mX=mX,set.options=set.options))
   class(obj) <- "multiDA"
   return(obj)

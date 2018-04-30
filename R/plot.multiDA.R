@@ -10,28 +10,16 @@
 #' @export
 #'
 
-plot.multiDA<-function(x, ranks=1:10, save.plot=FALSE, ...){
+plot.multiDA<-function(x, ranks=1:10, ...){
 
   if (!inherits(x, "multiDA"))  {
     stop("x not of class 'multiDA'")
   }
 
+  mR=x$mR
 
-  if(is.null(colnames(x$mX))){
-    rownames(x$res$mGamma)<-as.character(1:nrow(x$res$mGamma))
-    colnames(x$mX)<-rownames(x$res$mGamma)
-  }else{
-    rownames(x$res$mGamma)<-colnames(x$mX)
-  }
-
-  inds<-which(apply(x$res$mGamma,1,which.max)!=1) #non null cases
-  est.gamma<-apply(x$res$mGamma[inds,],1,max)
-
-  df<-data.frame("est.gamma"=est.gamma, "rank"=rank(-est.gamma),"partition"=apply(x$res$mGamma,1,which.max)[inds])
-  df<-df[order(df$rank),]
-
-  if(nrow(df)<max(ranks)){
-    ranks=1:nrow(df)
+  if(nrow(mR)<max(ranks)){
+    ranks=1:nrow(mR)
   }
 
   ###########################################################
@@ -67,12 +55,12 @@ plot.multiDA<-function(x, ranks=1:10, save.plot=FALSE, ...){
 
   data=list()
 
-  for(j in 1:nrow(df)){
-    vs=x$mS[,df$partition[j]]
-    vc=mC[,df$partition[j]]
+  for(j in 1:nrow(mR)){
+    vs=x$mS[,mR$partition[j]]
+    vc=mC[,mR$partition[j]]
     vy=.mat2vec(x$mY)
     grouping=vc[vy]
-    value=x$mX[, rownames(df)[j]]
+    value=x$mX[, as.character(mR$feature.ID[j])]
     rank.feature <- rep(j, length(vy))
     dat=data.frame(value, grouping, rank.feature)
     data[[j]]<-dat
@@ -81,17 +69,12 @@ plot.multiDA<-function(x, ranks=1:10, save.plot=FALSE, ...){
   p=function(r){
 
     p1<-ggplot2::ggplot(data[[r]],aes(x=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
-      ggtitle(paste("Feature:", rownames(df)[r], ", Rank:", df$rank[r], ", gamma.hat=",signif(df$est.gamma[r],4)))+
+      ggtitle(paste("Feature:", mR$feature.ID[r], ", Rank:", mR$rank[r], ", gamma.hat=",signif(mR$gamma.hat[r],4)))+
       scale_colour_brewer(palette="Dark2")+
       scale_fill_brewer(palette="Dark2")
-    if(save.plot==TRUE){
-      p1
-      ggplot2::ggsave(paste("multiDA-feature-rank",r,".pdf"))
-    }
-    else{
       p1
     }
-  }
+
 
   return(purrr::map(ranks, p))
 }
