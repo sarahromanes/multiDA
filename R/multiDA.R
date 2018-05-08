@@ -19,7 +19,7 @@
 #' vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
 #' rser <- sum(vals!=vy)/length(vy)
 
-#' @rdname multiDAs
+#' @rdname multiDA
 #' @export
 
 multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5", "GIC-6","Chi-Sq", "TEST1", "TEST2", "TEST3"),
@@ -150,7 +150,9 @@ multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "G
     vpen <- 0.5*vnu*log(n)+log(p)
 
   }else if (penalty == "TEST2") {
+
     vpen <- 0.5*vnu*log(n)+(2*log(p))
+    vpen[1] <- 0.5*vnu*log(n)
 
   }else if (penalty == "TEST3") {
   vpen <- 0.5*vnu*log(n)+ (2*log(p*vg))
