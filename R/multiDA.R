@@ -149,10 +149,10 @@ multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "G
   } else if (penalty == "TEST1") {
     vpen <- 0.5*vnu*log(n)+log(p)
 
-  }else if (penalty == "TEST2") {
+  } else if (penalty == "TEST2") {
 
     vpen <- 0.5*vnu*log(n)+(2*log(p))
-    vpen[1] <- 0.5*vnu*log(n)
+    vpen[1] <- 0
 
   }else if (penalty == "TEST3") {
   vpen <- 0.5*vnu*log(n)+ (2*log(p*vg))
