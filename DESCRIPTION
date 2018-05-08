@@ -12,5 +12,6 @@ Imports:
     partitions,
     matrixStats,
     ggplot2,
-    purrr
+    purrr,
+    arrayhelpers
 
