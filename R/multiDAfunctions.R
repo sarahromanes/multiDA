@@ -197,4 +197,34 @@
 
 ################################################################
 
+# .labelPartitions takes in a multiDA object x, and returns a labelled partition matrix mC
 
+.labelPartitions=function(x){
+  G=apply(x$mS, 2, max)
+  mC=x$mS
+
+  for(s in 1:ncol(x$mS)){
+    for (g in 1:G[s]){
+      inds=which(x$mS[,s]==g)
+      vals=c()
+      for(i in 1:length(inds)){
+
+        if(x$fac.input){
+          vy.fac <- x$vy.fac
+          labels<-purrr::map_chr(inds, .num.2.fac, vy.fac)
+        }else{
+          labels<-inds
+        }
+
+        if(i==length(inds)){
+          vals[i]=as.character(labels[i])
+        }else{
+          vals[i]=as.character(paste(labels[i], "+ "))
+        }
+      }
+      mC[inds,s]=paste(vals,collapse="")
+    }
+  }
+
+  return(mC)
+}

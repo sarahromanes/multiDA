@@ -19,10 +19,10 @@
 #' vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
 #' rser <- sum(vals!=vy)/length(vy)
 
-#' @rdname multiDA
+#' @rdname multiDAs
 #' @export
 
-multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5", "GIC-6","Chi-Sq", "TEST"),
+multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5", "GIC-6","Chi-Sq", "TEST1", "TEST2", "TEST3"),
                   equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"), sUser=NULL){
 
   fac.input=is.factor(vy)
@@ -146,9 +146,15 @@ multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "G
     # GIC pen 6
     vpen <- vnu*log(n)*log(p*vg)
 
-  } else if (penalty == "TEST") {
+  } else if (penalty == "TEST1") {
     vpen <- 0.5*vnu*log(n)+log(p)
-  }
+
+  }else if (penalty == "TEST2") {
+    vpen <- 0.5*vnu*log(n)+(2*log(p))
+
+  }else if (penalty == "TEST3") {
+  vpen <- 0.5*vnu*log(n)+ (2*log(p*vg))
+}
   vpen[1] <- 0
 
   ##############################################
@@ -163,11 +169,11 @@ multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "G
 
   #Generate rankings to either be used by print() or plot(), or for further analysis by the user
 
-  inds<-which(apply(res$mGamma,1,which.max)!=1) #non null cases
-  est.gamma<-apply(res$mGamma[inds,],1,max)
+  inds <- which(apply(res$mGamma,1,which.max)!=1) #non null cases
+  est.gamma <- apply(res$mGamma[inds,],1,max)
 
-  mR<-data.frame("rank"=rank(-est.gamma),"feature ID" = colnames(mX)[inds],"gamma.hat"=est.gamma,"partition"=apply(res$mGamma,1,which.max)[inds])
-  mR<-mR[order(mR$rank),]
+  mR <- data.frame("rank"=rank(-est.gamma),"feature ID" = colnames(mX)[inds],"gamma.hat"=est.gamma,"partition"=apply(res$mGamma,1,which.max)[inds])
+  mR <- mR[order(mR$rank),]
   rownames(mR)<-c()
 
   #####################################################
