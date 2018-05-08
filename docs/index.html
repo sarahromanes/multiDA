@@ -77,8 +77,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p>The following example trains the multiDA classifier using the SRBCT dataset, and finds the resubstitution error rate.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(SRBCT)
-vy   &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>vy
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vy   &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>vy
 mX   &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>mX
 res  &lt;-<span class="st"> </span><span class="kw"><a href="reference/multiDA.html">multiDA</a></span>(mX, vy, <span class="dt">penalty=</span><span class="st">"GIC-4"</span>, <span class="dt">equal.var=</span><span class="ot">TRUE</span>, <span class="dt">set.options=</span><span class="st">"exhaustive"</span>)
 vals &lt;-<span class="st"> </span><span class="kw">predict</span>(res, <span class="dt">newdata=</span>mX)<span class="op">$</span>vy.pred          <span class="co">#vy.pred returns class labels</span>

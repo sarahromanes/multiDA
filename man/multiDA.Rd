@@ -9,10 +9,8 @@
 \alias{rank.multiDA}
 \title{multiDA}
 \usage{
-multiDA(mX, vy, penalty = c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5",
-  "GIC-6", "Chi-Sq", "TEST1", "TEST2", "TEST3"), equal.var = TRUE,
-  set.options = c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"),
-  sUser = NULL)
+multiDA(mX, vy, c.pen = 2, equal.var = TRUE, set.options = c("exhaustive",
+  "onevsrest", "onevsall", "ordinal", "user"), sUser = NULL)
 
 tidy_multiDA(x)
 
@@ -27,7 +25,7 @@ rank.multiDA(x, G)
 
 \item{vy}{vector of class values (for training)}
 
-\item{penalty}{choice of penalty for use in training. Options include \code{"AIC"}, \code{"BIC"}....}
+\item{c.pen}{an scalar allowing for control of the penalty term, \code{0.5*vnu*log(n)+(c.pen*log(p))}. Default is \code{c.pen=2}, higher values of \code{c.pen} will generate more false negatives, and lower values will generate more false positives.}
 
 \item{equal.var}{a \code{LOGICAL} value, indicating whether group specific variances should be equal or allowed to vary.}
 
@@ -80,7 +78,7 @@ explore ranked features from a trained multiDA object
 data(SRBCT)
 vy   <- SRBCT$vy
 mX   <- SRBCT$mX
-res  <- multiDA(mX, vy, penalty="GIC-4", equal.var=TRUE, set.options="exhaustive")
+res  <- multiDA(mX, vy, c.pen=2, equal.var=TRUE, set.options="exhaustive")
 vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
 rser <- sum(vals!=vy)/length(vy)
 }

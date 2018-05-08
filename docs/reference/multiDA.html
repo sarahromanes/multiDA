@@ -28,8 +28,10 @@
 <meta property="og:title" content="multiDA — multiDA" />
 
 <meta property="og:description" content="the multiDA function
+multiDA "broom" functions
 plot ranked features from a trained multiDA object
-multiDA prediction of the class membership of a matrix of new observations." />
+multiDA prediction of the class membership of a matrix of new observations.
+explore ranked features from a trained multiDA object" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -97,19 +99,24 @@ multiDA prediction of the class membership of a matrix of new observations." />
 
     
     <p>the multiDA function</p>
+<p>multiDA "broom" functions</p>
 <p>plot ranked features from a trained multiDA object</p>
 <p>multiDA prediction of the class membership of a matrix of new observations.</p>
+<p>explore ranked features from a trained multiDA object</p>
     
 
-    <pre class="usage"><span class='fu'>multiDA</span>(<span class='no'>mX</span>, <span class='no'>vy</span>, <span class='kw'>penalty</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"AIC"</span>, <span class='st'>"BIC"</span>, <span class='st'>"GIC-2"</span>, <span class='st'>"GIC-3"</span>, <span class='st'>"GIC-4"</span>, <span class='st'>"GIC-5"</span>,
-  <span class='st'>"GIC-6"</span>, <span class='st'>"Chi-Sq"</span>), <span class='kw'>equal.var</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>set.options</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"exhaustive"</span>,
+    <pre class="usage"><span class='fu'>multiDA</span>(<span class='no'>mX</span>, <span class='no'>vy</span>, <span class='kw'>c.pen</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>equal.var</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>set.options</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"exhaustive"</span>,
   <span class='st'>"onevsrest"</span>, <span class='st'>"onevsall"</span>, <span class='st'>"ordinal"</span>, <span class='st'>"user"</span>), <span class='kw'>sUser</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='co'># S3 method for multiDA</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>ranks</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>save.plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>tidy_multiDA</span>(<span class='no'>x</span>)
 
 <span class='co'># S3 method for multiDA</span>
-<span class='fu'>predict</span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>ranks</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for multiDA</span>
+<span class='fu'>predict</span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='no'>...</span>)
+
+<span class='fu'>rank.multiDA</span>(<span class='no'>x</span>, <span class='no'>G</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -123,8 +130,8 @@ multiDA prediction of the class membership of a matrix of new observations." />
       <td><p>vector of class values (for training)</p></td>
     </tr>
     <tr>
-      <th>penalty</th>
-      <td><p>choice of penalty for use in training. Options include <code>"AIC"</code>, <code>"BIC"</code>....</p></td>
+      <th>c.pen</th>
+      <td><p>an scalar allowing for control of the penalty term, <code>0.5*vnu*log(n)+(c.pen*log(p))</code>. Default is <code>c.pen=2</code>, higher values of <code>c.pen</code> will generate more false negatives, and lower values will generate more false positives.</p></td>
     </tr>
     <tr>
       <th>equal.var</th>
@@ -140,15 +147,11 @@ multiDA prediction of the class membership of a matrix of new observations." />
     </tr>
     <tr>
       <th>x</th>
-      <td><p>trained multiDA object</p></td>
+      <td><p>a trained <code>multiDA</code> object</p></td>
     </tr>
     <tr>
       <th>ranks</th>
       <td><p>a vector of which ranked features should be plot</p></td>
-    </tr>
-    <tr>
-      <th>save.plot</th>
-      <td><p>logical value indicating whether plots should be saved (<code>TRUE</code>) or plotted on graphics device (<code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -162,13 +165,31 @@ multiDA prediction of the class membership of a matrix of new observations." />
       <th>newdata</th>
       <td><p>matrix of observations to predict. Each row corresponds to a new observation.</p></td>
     </tr>
+    <tr>
+      <th>G</th>
+      <td><p>return rankings and features based on the number of groupings (G) per feature to be considered.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>trained multiDA object</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>trained multiDA object</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Any other variables which will be ignored</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>multiDA</code> object that contains the trained multiDA classifier</p>
+<p>a tidy data frame, with key results from the trained <code>multiDA object</code>, namely, a data.frame of significant features and their ranks. In the spirit of "tidy" from the broom package.</p>
 <p>plots</p>
 <p>list predicted class memberships of each row in newdata</p>
+<p>dRank, a dataframe of summarised features, from which feature names can easily be fed into the plot.multiDA function for easy visualisation of the groupings</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -176,7 +197,7 @@ multiDA prediction of the class membership of a matrix of new observations." />
 <span class='fu'>data</span>(<span class='no'>SRBCT</span>)
 <span class='no'>vy</span>   <span class='kw'>&lt;-</span> <span class='no'>SRBCT</span>$<span class='no'>vy</span>
 <span class='no'>mX</span>   <span class='kw'>&lt;-</span> <span class='no'>SRBCT</span>$<span class='no'>mX</span>
-<span class='no'>res</span>  <span class='kw'>&lt;-</span> <span class='fu'>multiDA</span>(<span class='no'>mX</span>, <span class='no'>vy</span>, <span class='kw'>penalty</span><span class='kw'>=</span><span class='st'>"GIC-4"</span>, <span class='kw'>equal.var</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>set.options</span><span class='kw'>=</span><span class='st'>"exhaustive"</span>)
+<span class='no'>res</span>  <span class='kw'>&lt;-</span> <span class='fu'>multiDA</span>(<span class='no'>mX</span>, <span class='no'>vy</span>, <span class='kw'>c.pen</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>equal.var</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>set.options</span><span class='kw'>=</span><span class='st'>"exhaustive"</span>)
 <span class='no'>vals</span> <span class='kw'>&lt;-</span> <span class='fu'>predict</span>(<span class='no'>res</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='no'>mX</span>)$<span class='no'>vy.pred</span>          <span class='co'>#vy.pred returns class labels</span>
 <span class='no'>rser</span> <span class='kw'>&lt;-</span> <span class='fu'>sum</span>(<span class='no'>vals</span><span class='kw'>!=</span><span class='no'>vy</span>)/<span class='fu'>length</span>(<span class='no'>vy</span>)</div></pre>
   </div>

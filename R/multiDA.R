@@ -3,7 +3,7 @@
 #' @title multiDA
 #' @param mX matrix containing the training data. The rows are the sample observations, and the columns are the features.
 #' @param vy vector of class values (for training)
-#' @param penalty choice of penalty for use in training. Options include \code{"AIC"}, \code{"BIC"}....
+#' @param c.pen an scalar allowing for control of the penalty term, \code{0.5*vnu*log(n)+(c.pen*log(p))}. Default is \code{c.pen=2}, higher values of \code{c.pen} will generate more false negatives, and lower values will generate more false positives.
 #' @param equal.var a \code{LOGICAL} value, indicating whether group specific variances should be equal or allowed to vary.
 #' @param set.options options for set partition matrix S.
 #' @param sUser if \code{set.options} is set to \code{"user"}, \code{sUser} is a user input matrix for paritions to be considered. \code{sUser} MUST be a subset of the full partition matrix..
@@ -15,14 +15,14 @@
 #' data(SRBCT)
 #' vy   <- SRBCT$vy
 #' mX   <- SRBCT$mX
-#' res  <- multiDA(mX, vy, penalty="GIC-4", equal.var=TRUE, set.options="exhaustive")
+#' res  <- multiDA(mX, vy, c.pen=2, equal.var=TRUE, set.options="exhaustive")
 #' vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
 #' rser <- sum(vals!=vy)/length(vy)
 
 #' @rdname multiDA
 #' @export
 
-multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "GIC-5", "GIC-6","Chi-Sq", "TEST1", "TEST2", "TEST3"),
+multiDA <- function(mX,vy, c.pen=2,
                   equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"), sUser=NULL){
 
   fac.input=is.factor(vy)
@@ -114,50 +114,10 @@ multiDA <- function(mX,vy, penalty=c("AIC", "BIC", "GIC-2", "GIC-3", "GIC-4", "G
   }
 
   # Calculate penalty for the calculated degrees of freedom
-  alpha <- 0.01
-  vpen <- rep(0, V)
-  if (penalty == "AIC") {
-    # AIC
-    vpen <- vnu * 2
-  } else if (penalty == "BIC") {
-    # BIC
-    vpen <- vnu * log(n)
-  } else if (penalty == "GIC-2") {
-    # GIC pen 2
 
-    vpen <- vnu*(vg * p)^(1/3)
-  } else if (penalty == "GIC-3") {
-    # GIC pen 3
-    vpen <- vnu*2*log(p*vg)
+   vpen <- 0.5*vnu*log(n)+(c.pen*log(p))
+   vpen[1] <- 0
 
-  } else if (penalty == "Chi-Sq") {
-    # Control type 1 error for each test against the null hypothesis
-    vpen <- qchisq(alpha, vnu, lower.tail = FALSE)
-
-  } else if (penalty == "GIC-4") {
-    # GIC pen 4
-    vpen <- vnu*2*(log(p*vg)+log(log(p*vg)))
-
-  } else if (penalty == "GIC-5") {
-    # GIC pen 5
-    vpen <- vnu*log(log(n))*log(p*vg)
-
-  } else if (penalty == "GIC-6") {
-    # GIC pen 6
-    vpen <- vnu*log(n)*log(p*vg)
-
-  } else if (penalty == "TEST1") {
-    vpen <- 0.5*vnu*log(n)+log(p)
-
-  } else if (penalty == "TEST2") {
-
-    vpen <- 0.5*vnu*log(n)+(2*log(p))
-    vpen[1] <- 0
-
-  }else if (penalty == "TEST3") {
-  vpen <- 0.5*vnu*log(n)+ (2*log(p*vg))
-}
-  vpen[1] <- 0
 
   ##############################################
 
