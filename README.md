@@ -29,7 +29,7 @@ The following example trains the multiDA classifier using the SRBCT dataset, and
 ```r
 vy   <- SRBCT$vy
 mX   <- SRBCT$mX
-res  <- multiDA(mX, vy, penalty="GIC-4", equal.var=TRUE, set.options="exhaustive")
+res  <- multiDA(mX, vy, c.pen=2, equal.var=TRUE, set.options="exhaustive")
 vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
 rser <- sum(vals!=vy)/length(vy)
 
