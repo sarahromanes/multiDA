@@ -134,8 +134,11 @@ multiDA <- function(mX,vy, c.pen=2,
   inds <- which(apply(res$mGamma,1,which.max)!=1) #non null cases
    
  
-  est.gamma <- apply(as.matrix(res$mGamma[inds,]),1,max)
-
+  if(is.numeric(inds)){
+    est.gamma <- apply(as.matrix(res$mGamma[inds,]),1,max)
+  }else{
+    est.gamma <- apply(res$mGamma[inds,],1,max)
+  }
   mR <- data.frame("rank"=rank(-est.gamma),"feature ID" = colnames(mX)[inds],"gamma.hat"=est.gamma,"partition"=apply(res$mGamma,1,which.max)[inds])
   mR <- mR[order(mR$rank),]
   rownames(mR)<-c()
