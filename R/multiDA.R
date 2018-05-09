@@ -132,7 +132,9 @@ multiDA <- function(mX,vy, c.pen=2,
   #Generate rankings to either be used by print() or plot(), or for further analysis by the user
 
   inds <- which(apply(res$mGamma,1,which.max)!=1) #non null cases
-  est.gamma <- apply(res$mGamma[inds,],1,max)
+   
+ 
+  est.gamma <- apply(as.matrix(res$mGamma[inds,],1,max))
 
   mR <- data.frame("rank"=rank(-est.gamma),"feature ID" = colnames(mX)[inds],"gamma.hat"=est.gamma,"partition"=apply(res$mGamma,1,which.max)[inds])
   mR <- mR[order(mR$rank),]
