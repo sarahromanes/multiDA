@@ -22,7 +22,7 @@
 #' @rdname multiDA
 #' @export
 
-multiDA <- function(mX,vy, c.pen=2,
+multiDA <- function(mX,vy, C1=1,C2=2, C3=1,
                   equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"), sUser=NULL){
 
   fac.input=is.factor(vy)
@@ -115,8 +115,9 @@ multiDA <- function(mX,vy, c.pen=2,
 
   # Calculate penalty for the calculated degrees of freedom
 
-   vpen <- 0.5*vnu*log(n)+(c.pen*log(p))
+   vpen <- C1*vnu*log(n)+(C2*log(p/C3))
    vpen[1] <- 0
+
 
 
   ##############################################
@@ -132,8 +133,8 @@ multiDA <- function(mX,vy, c.pen=2,
   #Generate rankings to either be used by print() or plot(), or for further analysis by the user
 
   inds <- which(apply(res$mGamma,1,which.max)!=1) #non null cases
-   
- 
+
+
   if(is.numeric(inds)){
     est.gamma <- apply(as.matrix(res$mGamma[inds,]),1,max)
   }else{
