@@ -118,10 +118,13 @@ multiDA <- function(mX,vy, penalty="default",
   if(penalty=="weak"){
     vpen <- 2*vnu*log(n)
     vpen[1] <- 0
-  } else if(penalty=="default"){
+  } else if(penalty=="strong"){
     vpen <- 2*vnu*(log(n)+log(p))
     vpen[1] <- 0
-  }
+  } else if(penalty=="default"){
+  vpen <- vnu*(log(n)+log(p))
+  vpen[1] <- 0
+}
 
 
 
