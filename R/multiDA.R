@@ -3,7 +3,7 @@
 #' @title multiDA
 #' @param mX matrix containing the training data. The rows are the sample observations, and the columns are the features.
 #' @param vy vector of class values (for training)
-#' @param c.pen an scalar allowing for control of the penalty term, \code{0.5*vnu*log(n)+(c.pen*log(p))}. Default is \code{c.pen=2}, higher values of \code{c.pen} will generate more false negatives, and lower values will generate more false positives.
+#' @param penalty default is in the form of the EBIC, which penalises based on the number of features. If option \code{penalty="weak"} is specified, the penalty reverts back to the BIC
 #' @param equal.var a \code{LOGICAL} value, indicating whether group specific variances should be equal or allowed to vary.
 #' @param set.options options for set partition matrix S.
 #' @param sUser if \code{set.options} is set to \code{"user"}, \code{sUser} is a user input matrix for paritions to be considered. \code{sUser} MUST be a subset of the full partition matrix..
@@ -12,17 +12,17 @@
 
 #' @examples
 #' #train the multiDA classifier using the SRBCT dataset, and find the resubstitution error rate
-#' data(SRBCT)
+#'
 #' vy   <- SRBCT$vy
 #' mX   <- SRBCT$mX
-#' res  <- multiDA(mX, vy, c.pen=2, equal.var=TRUE, set.options="exhaustive")
+#' res  <- multiDA(mX, vy, equal.var=TRUE, set.options="exhaustive")
 #' vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
 #' rser <- sum(vals!=vy)/length(vy)
 
 #' @rdname multiDA
 #' @export
 
-multiDA <- function(mX,vy, C1=1,C2=2, C3=1,
+multiDA <- function(mX,vy, penalty="default",
                   equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"), sUser=NULL){
 
   fac.input=is.factor(vy)
@@ -115,8 +115,14 @@ multiDA <- function(mX,vy, C1=1,C2=2, C3=1,
 
   # Calculate penalty for the calculated degrees of freedom
 
-   vpen <- C1*vnu*log(n)+(C2*log(p/C3))
-   vpen[1] <- 0
+  if(penalty=="weak"){
+    vpen <- 2*vnu*log(n)
+    vpen[1] <- 0
+  } else if(penalty=="default"){
+    vpen <- 2*vnu*(log(n)+log(p))
+    vpen[1] <- 0
+  }
+
 
 
 
