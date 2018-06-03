@@ -9,7 +9,7 @@
 #' @export
 #'
 
-plot.multiDA<-function(x, ranks=1:10, ...){
+plot.multiDA<-function(x, ranked=TRUE, ranks=1:10, features=NULL){
 
   if (!inherits(x, "multiDA"))  {
     stop("x not of class 'multiDA'")
@@ -17,8 +17,11 @@ plot.multiDA<-function(x, ranks=1:10, ...){
 
   mR <- x$mR
 
-  if(nrow(mR)<max(ranks)){
-    ranks <- 1:nrow(mR)
+  if(ranked==TRUE){
+
+    if(nrow(mR)<max(ranks)){
+      ranks <- 1:nrow(mR)
+    }
   }
 
   ###########################################################
@@ -30,7 +33,13 @@ plot.multiDA<-function(x, ranks=1:10, ...){
 
   data=list()
 
-  for(j in 1:nrow(mR)){
+  inds=1:nrow(mR)
+
+  if(ranked==FALSE){
+    inds <- which(res$mR$feature.ID%in%features)
+  }
+
+  for(j in inds){
     vs <- x$mS[,mR$partition[j]]
     vc <- mC[,mR$partition[j]]
     vy <- .mat2vec(x$mY)
@@ -41,6 +50,8 @@ plot.multiDA<-function(x, ranks=1:10, ...){
     data[[j]] <- dat
   }
 
+
+
   p=function(r){
 
     p1 <- ggplot2::ggplot(data[[r]],aes(x=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
@@ -50,6 +61,12 @@ plot.multiDA<-function(x, ranks=1:10, ...){
       p1
     }
 
+  if(ranked==TRUE){
+    inds.plot=ranks
+  }
+  if(ranked==FALSE){
+    inds.plot=inds
+  }
 
-  return(purrr::map(ranks, p))
+  return(purrr::map(inds.plot, p))
 }

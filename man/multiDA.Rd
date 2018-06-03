@@ -9,12 +9,13 @@
 \alias{rank.multiDA}
 \title{multiDA}
 \usage{
-multiDA(mX, vy, c.pen = 2, equal.var = TRUE, set.options = c("exhaustive",
-  "onevsrest", "onevsall", "ordinal", "user"), sUser = NULL)
+multiDA(mX, vy, penalty = c("EBIC", "BIC"), equal.var = TRUE,
+  set.options = c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"),
+  sUser = NULL)
 
 tidy_multiDA(x)
 
-\method{plot}{multiDA}(x, ranks = 1:10, ...)
+\method{plot}{multiDA}(x, ranked = TRUE, ranks = 1:10, features = NULL)
 
 \method{predict}{multiDA}(object, newdata, ...)
 
@@ -25,7 +26,7 @@ rank.multiDA(x, G)
 
 \item{vy}{vector of class values (for training)}
 
-\item{c.pen}{an scalar allowing for control of the penalty term, \code{0.5*vnu*log(n)+(c.pen*log(p))}. Default is \code{c.pen=2}, higher values of \code{c.pen} will generate more false negatives, and lower values will generate more false positives.}
+\item{penalty}{default is in the form of the EBIC, which penalises based on the number of features. If option \code{penalty="BIC"} is specified, the penalty reverts back to the BIC.}
 
 \item{equal.var}{a \code{LOGICAL} value, indicating whether group specific variances should be equal or allowed to vary.}
 
@@ -37,11 +38,11 @@ rank.multiDA(x, G)
 
 \item{ranks}{a vector of which ranked features should be plot}
 
-\item{...}{Any other variables which will be ignored}
-
 \item{object}{trained multiDA object}
 
 \item{newdata}{matrix of observations to predict. Each row corresponds to a new observation.}
+
+\item{...}{Any other variables which will be ignored}
 
 \item{G}{return rankings and features based on the number of groupings (G) per feature to be considered.}
 
@@ -75,10 +76,10 @@ explore ranked features from a trained multiDA object
 }
 \examples{
 #train the multiDA classifier using the SRBCT dataset, and find the resubstitution error rate
-data(SRBCT)
+
 vy   <- SRBCT$vy
 mX   <- SRBCT$mX
-res  <- multiDA(mX, vy, c.pen=2, equal.var=TRUE, set.options="exhaustive")
+res  <- multiDA(mX, vy, equal.var=TRUE, set.options="exhaustive")
 vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
 rser <- sum(vals!=vy)/length(vy)
 }

@@ -3,7 +3,7 @@
 #' @title multiDA
 #' @param mX matrix containing the training data. The rows are the sample observations, and the columns are the features.
 #' @param vy vector of class values (for training)
-#' @param penalty default is in the form of the EBIC, which penalises based on the number of features. If option \code{penalty="weak"} is specified, the penalty reverts back to the BIC
+#' @param penalty default is in the form of the EBIC, which penalises based on the number of features. If option \code{penalty="BIC"} is specified, the penalty reverts back to the BIC.
 #' @param equal.var a \code{LOGICAL} value, indicating whether group specific variances should be equal or allowed to vary.
 #' @param set.options options for set partition matrix S.
 #' @param sUser if \code{set.options} is set to \code{"user"}, \code{sUser} is a user input matrix for paritions to be considered. \code{sUser} MUST be a subset of the full partition matrix..
@@ -22,7 +22,7 @@
 #' @rdname multiDA
 #' @export
 
-multiDA <- function(mX,vy, penalty="default",
+multiDA <- function(mX,vy, penalty=c("EBIC", "BIC"),
                   equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"), sUser=NULL){
 
   fac.input=is.factor(vy)
@@ -115,16 +115,15 @@ multiDA <- function(mX,vy, penalty="default",
 
   # Calculate penalty for the calculated degrees of freedom
 
-  if(penalty=="weak"){
+  if(penalty=="BIC"){
+
     vpen <- 2*vnu*log(n)
     vpen[1] <- 0
-  } else if(penalty=="strong"){
-    vpen <- 2*vnu*(log(n)+log(p))
+
+  } else if (penalty=="EBIC"){
+    vpen <- vnu*(log(n)+2*log(p))
     vpen[1] <- 0
-  } else if(penalty=="default"){
-  vpen <- vnu*(log(n)+log(p))
-  vpen[1] <- 0
-}
+  }
 
 
 
@@ -142,15 +141,28 @@ multiDA <- function(mX,vy, penalty="default",
   #Generate rankings to either be used by print() or plot(), or for further analysis by the user
 
   inds <- which(apply(res$mGamma,1,which.max)!=1) #non null cases
-
+  non.inds <- which(apply(res$mGamma,1,which.max)==1) #non nul
 
   if(is.numeric(inds)){
     est.gamma <- apply(as.matrix(res$mGamma[inds,]),1,max)
   }else{
     est.gamma <- apply(res$mGamma[inds,],1,max)
   }
+
+  if(is.numeric(non.inds)){
+    est.gamma1 <- apply(as.matrix(res$mGamma[non.inds,]),1,max)
+  }else{
+    est.gamma1 <- apply(res$mGamma[non.inds,],1,max)
+  }
+
+
   mR <- data.frame("rank"=rank(-est.gamma),"feature ID" = colnames(mX)[inds],"gamma.hat"=est.gamma,"partition"=apply(res$mGamma,1,which.max)[inds])
   mR <- mR[order(mR$rank),]
+
+  add <- data.frame("rank"=(rank(est.gamma1)+nrow(mR)),"feature ID" = colnames(mX)[non.inds],"gamma.hat"=est.gamma1,"partition"=rep(1, length(non.inds)))
+  add <- add[order(add$rank),]
+
+  mR <- rbind(mR,add)
   rownames(mR)<-c()
 
   #####################################################
