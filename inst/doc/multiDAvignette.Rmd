@@ -1,0 +1,45 @@
+---
+title: "High Dimensional Discriminant Analysis using the multiDA package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{High Dimensional Discriminant Analysis using the multiDA package}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+
+# Running the multiDA algorithm
+
+```{r}
+library(multiDA)
+
+vy   <- SRBCT$vy
+mX   <- SRBCT$mX
+res  <- multiDA(mX, vy, penalty="EBIC", equal.var=TRUE, set.options="exhaustive")
+vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
+rser <- sum(vals!=vy)/length(vy)
+```
+
+
+# Exploring the print and plot functions 
+
+We can use the ```print``` command to look at a quick summary of the model fitted.
+
+```{r}
+print(res)
+```
+
+Further, we can plot the kernel density estimates of features we are interested in. By default, the ```plot``` function plots the top 10 ranked features. If ```ranked=FALSE``, then the user can specify which features to be plotted (specified by column names).
+
+```{r}
+plot(res, ranks = 1:5)
+```
+
+An example using specified features
+```{r}
+plot(res, ranked=FALSE, features = c("V132", "V123"))
+```
+
+
+
+# multiDA "broom" functions
