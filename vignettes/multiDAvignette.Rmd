@@ -1,8 +1,8 @@
 ---
-title: "High Dimensional Discriminant Analysis using the multiDA package"
+title: "Vignette for the multiDA package"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{High Dimensional Discriminant Analysis using the multiDA package}
+  %\VignetteIndexEntry{Vignette for the multiDA package}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -10,14 +10,23 @@ vignette: >
 
 # Running the multiDA algorithm
 
+Hey, so you are interested in using the multiDA package for your analysis - awesome! Here are a few examples to get your work going. Loading the package using the ```library(multiDA)``` function, we can run a model on the inbuilt ```SRBCT``` data set as follows:
+
 ```{r}
 library(multiDA)
 
 vy   <- SRBCT$vy
 mX   <- SRBCT$mX
-res  <- multiDA(mX, vy, penalty="EBIC", equal.var=TRUE, set.options="exhaustive")
-vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
+res  <- multiDA(mX=mX, vy=vy, penalty="EBIC", equal.var=TRUE, set.options="exhaustive")
+```
+
+
+If we want to predict class labels, we can use the ```predict`` function in order to do so. In this case, we will find the resubstitution error rate for this dataset using the multiDA algorithm. 
+
+```{r}
+vals <- predict(res, newdata=mX)$vy.pred          
 rser <- sum(vals!=vy)/length(vy)
+rser
 ```
 
 
@@ -32,12 +41,13 @@ print(res)
 Further, we can plot the kernel density estimates of features we are interested in. By default, the ```plot``` function plots the top 10 ranked features. If ```ranked=FALSE``, then the user can specify which features to be plotted (specified by column names).
 
 ```{r}
-plot(res, ranks = 1:5)
+p <- plot(res, ranks = 1)
 ```
 
 An example using specified features
 ```{r}
-plot(res, ranked=FALSE, features = c("V132", "V123"))
+p1 <- plot(res, ranked=FALSE, features = c("V22", "V122"))
+p1
 ```
 
 
