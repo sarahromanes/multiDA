@@ -1,7 +1,6 @@
 #' explore ranked features from a trained multiDA object
 #'
 #' @export
-#' @rdname multiDA
 #' @param x trained multiDA object
 #' @param G return rankings and features based on the number of groupings (G) per feature to be considered.
 #' @param ... Any other variables which will be ignored

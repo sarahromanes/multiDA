@@ -30,7 +30,7 @@
 <meta property="og:description" content="the multiDA function
 plot ranked features from a trained multiDA object
 multiDA prediction of the class membership of a matrix of new observations.
-explore ranked features from a trained multiDA object" />
+Summarizes the trained multiDA classifier in a nice manner. User can select number of features to summarise" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,7 +100,7 @@ explore ranked features from a trained multiDA object" />
     <p>the multiDA function</p>
 <p>plot ranked features from a trained multiDA object</p>
 <p>multiDA prediction of the class membership of a matrix of new observations.</p>
-<p>explore ranked features from a trained multiDA object</p>
+<p>Summarizes the trained multiDA classifier in a nice manner. User can select number of features to summarise</p>
     
 
     <pre class="usage"><span class='fu'>multiDA</span>(<span class='no'>mX</span>, <span class='no'>vy</span>, <span class='kw'>penalty</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"EBIC"</span>, <span class='st'>"BIC"</span>), <span class='kw'>equal.var</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -113,7 +113,8 @@ explore ranked features from a trained multiDA object" />
 <span class='co'># S3 method for multiDA</span>
 <span class='fu'>predict</span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='no'>...</span>)
 
-<span class='fu'>rank.multiDA</span>(<span class='no'>x</span>, <span class='no'>G</span>)</pre>
+<span class='co'># S3 method for multiDA</span>
+<span class='fu'>print</span>(<span class='no'>x</span>, <span class='kw'>max.rank</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,16 +164,16 @@ explore ranked features from a trained multiDA object" />
       <td><p>Any other variables which will be ignored</p></td>
     </tr>
     <tr>
-      <th>G</th>
-      <td><p>return rankings and features based on the number of groupings (G) per feature to be considered.</p></td>
+      <th>max.rank</th>
+      <td><p>number of significant features to display. If <code>"ALL"</code>, all features are displayed.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>trained multiDA object</p></td>
+      <td><p>object to print</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Any other variables which will be ignored</p></td>
+      <td><p>Any other variables which will be ignored.</p></td>
     </tr>
     </table>
     
@@ -181,7 +182,6 @@ explore ranked features from a trained multiDA object" />
     <p><code>multiDA</code> object that contains the trained multiDA classifier</p>
 <p>plots</p>
 <p>list predicted class memberships of each row in newdata</p>
-<p>dRank, a dataframe of summarised features, from which feature names can easily be fed into the plot.multiDA function for easy visualisation of the groupings</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

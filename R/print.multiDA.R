@@ -3,6 +3,7 @@
 #' Summarizes the trained multiDA classifier in a nice manner. User can select number of features to summarise
 #'
 #' @param x object to print
+#' @rdname multiDA
 #' @param max.rank number of significant features to display. If \code{"ALL"}, all features are displayed.
 #' @param ... Any other variables which will be ignored.
 #' @export
