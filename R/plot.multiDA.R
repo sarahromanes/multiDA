@@ -54,11 +54,11 @@ plot.multiDA<-function(x, ranked=TRUE, ranks=1:10, features=NULL){
 
   p=function(r){
 
-    p1 <- ggplot2::ggplot(data[[r]],aes(x=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
+    p1 <-ggplot2::ggplot(data[[r]],aes(x=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
       ggtitle(paste("Feature:", mR$feature.ID[r], ", Rank:", mR$rank[r], ", gamma.hat=",signif(mR$gamma.hat[r],4)))+
       scale_colour_brewer(palette="Dark2")+
       scale_fill_brewer(palette="Dark2")
-      p1
+    print(p1)
     }
 
   if(ranked==TRUE){
@@ -68,5 +68,5 @@ plot.multiDA<-function(x, ranked=TRUE, ranks=1:10, features=NULL){
     inds.plot=inds
   }
 
-  return(purrr::map(inds.plot, p))
+  return(purrr::walk(inds.plot, p))
 }

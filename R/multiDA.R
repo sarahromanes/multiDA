@@ -90,7 +90,6 @@ multiDA <- function(mX,vy, penalty=c("EBIC", "BIC"),
     check <- all(sUser %in% mS)
     if (check == FALSE) {
       stop("User defined S matrix is not a subset of all set partitions")
-      break
     } else {
       mS <- sUser
     }
