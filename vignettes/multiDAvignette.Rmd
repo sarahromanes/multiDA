@@ -41,13 +41,12 @@ print(res)
 Further, we can plot the kernel density estimates of features we are interested in. By default, the ```plot``` function plots the top 10 ranked features. If ```ranked=FALSE``, then the user can specify which features to be plotted (specified by column names).
 
 ```{r}
-p <- plot(res, ranks = 1)
+plot(res, ranks = 1)
 ```
 
 An example using specified features
 ```{r}
-p1 <- plot(res, ranked=FALSE, features = c("V22", "V122"))
-p1
+plot(res, ranked=FALSE, features = c("V22", "V122"))
 ```
 
 
