@@ -45,6 +45,6 @@ rser <- sum(vals!=vy)/length(vy)
 This project is licensed under the GPL-2 license - see the [LICENSE.md](LICENSE.md) file for details
 
 
-##Acknowledgements
+## Acknowledgements
 
 I am grateful to everyone who has provided thoughtful and helpful comments to support me building my first package - especially members of the Sydney University Statistical Bioinformatics group and also the NUMBATS group at Monash University. You guys rock!
