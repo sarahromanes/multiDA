@@ -15,7 +15,7 @@
 #'
 #' vy   <- SRBCT$vy
 #' mX   <- SRBCT$mX
-#' res  <- multiDA(mX, vy, equal.var=TRUE, set.options="exhaustive")
+#' res  <- multiDA(mX, vy, equal.var=TRUE, set.options="exhaustive", penalty="EBIC")
 #' vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
 #' rser <- sum(vals!=vy)/length(vy)
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • multiDA</title>
+<title>multiDA "broom" functions — tidy_multiDA • multiDA</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,7 +25,10 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="multiDA "broom" functions — tidy_multiDA" />
+
+<meta property="og:description" content="multiDA "broom" functions" />
+<meta name="twitter:card" content="summary" />
 
 
 <!-- mathjax -->
@@ -42,7 +45,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -83,59 +86,56 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>multiDA "broom" functions</h1>
+    
+    <div class="hidden name"><code>multiDA.broom.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    
+    <p>multiDA "broom" functions</p>
+    
 
-    <colgroup>
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'><a href='multiDA.html'>tidy_multiDA</a></span>(<span class='no'>x</span>)
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        <!--  -->
-        <td>
-          <p><code><a href="multiDA.broom.html">tidy_multiDA()</a></code> <code><a href="multiDA.broom.html">augment_multiDA()</a></code> <code><a href="multiDA.broom.html">glimpse_multiDA()</a></code> </p>
-        </td>
-        <td><p>multiDA "broom" functions</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="multiDA.html">multiDA()</a></code> <code><a href="multiDA.html">plot(<i>&lt;multiDA&gt;</i>)</a></code> <code><a href="multiDA.html">predict(<i>&lt;multiDA&gt;</i>)</a></code> <code><a href="multiDA.html">rank.multiDA()</a></code> </p>
-        </td>
-        <td><p>multiDA</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="print.multiDA.html">print(<i>&lt;multiDA&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Outputs the summary for a multiDA classifier object.</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
-          <p><code><a href="SRBCT.html">SRBCT</a></code> </p>
-        </td>
-        <td><p>Small round blue cell tumors (SRBCTs) microarray data</p></td>
-      </tr>
-    </tbody>
+<span class='fu'><a href='augment_multiDA.html'>augment_multiDA</a></span>(<span class='no'>x</span>)
+
+<span class='fu'><a href='glimpse_multiDA.html'>glimpse_multiDA</a></span>(<span class='no'>x</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>a trained <code>multiDA</code> object</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>a trained <code>multiDA</code> object</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>a trained <code>multiDA</code> object</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>a tidy data frame, with key results from the trained <code>multiDA object</code>, namely, a data.frame of significant features and their ranks. In the spirit of "tidy" from the broom package.</p>
+<p>a tidy data frame, returning back the original class, matrix of features, augmented with the paritioning of each feature as given by the algorithm. In the spirit of "augment" from the broom package.</p>
+<p>a one row data frame, with quick summaries from the algorithm. In the spirit of the "glance" function from the broom package.</p>
+    
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
+
   </div>
 </div>
 
