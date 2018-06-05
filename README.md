@@ -40,14 +40,8 @@ rser <- sum(vals!=vy)/length(vy)
 * **Sarah Romanes**  - [@sarah_romanes](https://twitter.com/sarah_romanes)
 * **John Ormerod**   - [@john_t_ormerod](https://twitter.com/john_t_ormerod)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
