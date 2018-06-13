@@ -54,7 +54,7 @@ multiDA <- function(mX,vy, penalty=c("EBIC", "BIC"),
   ##############################################
 
   # Find all partitions of K variables
-
+  set.options <- match.arg(set.options)
 
   if (set.options == "exhaustive") {
     mS <- partitions::setparts(K)
@@ -113,6 +113,8 @@ multiDA <- function(mX,vy, penalty=c("EBIC", "BIC"),
   }
 
   # Calculate penalty for the calculated degrees of freedom
+
+  penalty <- match.arg(penalty)
 
   if(penalty=="BIC"){
 
