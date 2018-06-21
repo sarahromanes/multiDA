@@ -143,6 +143,36 @@ rser</code></pre></div>
 <div id="multida-broom-functions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#multida-broom-functions" class="anchor"></a>multiDA “broom” functions</h1>
+<div id="multida-glimpse-function" class="section level2">
+<h2 class="hasAnchor">
+<a href="#multida-glimpse-function" class="anchor"></a>multiDA “glimpse” function</h2>
+<p>a one row data frame, with quick summaries from the algorithm. In the spirit of the “glance” function from the broom package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/multiDA.broom.html">glimpse_multiDA</a></span>(res)</code></pre></div>
+<pre><code>##   Classes Number.of.Partitions Number.of.Signficant.Features Top.Gamma
+## 1       4                   15                          1586 0.9997741</code></pre>
+</div>
+<div id="multida-tidy-function" class="section level2">
+<h2 class="hasAnchor">
+<a href="#multida-tidy-function" class="anchor"></a>multiDA “tidy” function</h2>
+<p>This returns a tidy data frame, with key results from the trained multiDA object, namely, a data.frame of significant features and their ranks. In the spirit of “tidy” from the broom package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multiDA.broom.html">tidy_multiDA</a></span>(res)
+<span class="kw">head</span>(tidy_res)</code></pre></div>
+<pre><code>##   rank feature.ID gamma.hat partition
+## 1    1      V1172 0.9997741         8
+## 2    2      V1232 0.9997576         4
+## 3    3      V1233 0.9997563         3
+## 4    4      V1324 0.9997506         3
+## 5    5       V706 0.9997441         5
+## 6    6       V434 0.9997437         3</code></pre>
+</div>
+<div id="multida-augment-function" class="section level2">
+<h2 class="hasAnchor">
+<a href="#multida-augment-function" class="anchor"></a>multiDA “augment” function</h2>
+<p>Returns a tidy data frame, returning back the original class, matrix of features, augmented with the paritioning of each feature as given by the algorithm. In the spirit of “augment” from the broom package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">augment_res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multiDA.broom.html">augment_multiDA</a></span>(res)
+<span class="kw">dim</span>(augment_res) <span class="co">#twice as long!</span></code></pre></div>
+<pre><code>## [1]   63 3173</code></pre>
+</div>
 </div>
   </div>
 
@@ -153,7 +183,13 @@ rser</code></pre></div>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#running-the-multida-algorithm">Running the multiDA algorithm</a></li>
       <li><a href="#exploring-the-print-and-plot-functions">Exploring the print and plot functions</a></li>
-      <li><a href="#multida-broom-functions">multiDA “broom” functions</a></li>
+      <li>
+<a href="#multida-broom-functions">multiDA “broom” functions</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#multida-glimpse-function">multiDA “glimpse” function</a></li>
+      <li><a href="#multida-tidy-function">multiDA “tidy” function</a></li>
+      <li><a href="#multida-augment-function">multiDA “augment” function</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>

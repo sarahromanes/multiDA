@@ -3,8 +3,10 @@ title: "Vignette for the multiDA package"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette for the multiDA package}
-  %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -52,3 +54,32 @@ plot(res, ranked=FALSE, features = c("V22", "V122"))
 
 
 # multiDA "broom" functions
+
+## multiDA "glimpse" function
+
+a one row data frame, with quick summaries from the algorithm. In the spirit of the "glance" function from the broom package.
+
+```{r}
+glimpse_multiDA(res)
+```
+
+
+## multiDA "tidy" function
+
+This returns a tidy data frame, with key results from the trained multiDA object, namely, a data.frame of significant features and their ranks. In the spirit of "tidy" from the broom package.
+
+```{r}
+tidy_res <- tidy_multiDA(res)
+head(tidy_res)
+```
+
+
+## multiDA "augment" function
+
+Returns a tidy data frame, returning back the original class, matrix of features, augmented with the paritioning of each feature as given by the algorithm. In the spirit of "augment" from the broom package.
+
+```{r}
+augment_res <- augment_multiDA(res)
+dim(augment_res) #twice as long!
+```
+
