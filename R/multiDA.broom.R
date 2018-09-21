@@ -15,46 +15,6 @@ tidy_multiDA <-function(x){
   return(x$mR)
 }
 
-#' @title augment multiDA
-#' @rdname multiDA.broom
-#' @param x a trained \code{multiDA} object
-#' @return  a tidy data frame, returning back the original class, matrix of features, augmented with the paritioning of each feature as given by the algorithm. In the spirit of "augment" from the broom package.
-#' @export
-
-augment_multiDA <- function(x){
-
-  vy=as.numeric(x$vy)
-
-  mM <- apply(x$mGamma,1,which.max)
-  mC <- .labelPartitions(x)
-
-  inds1 <- which(mM==1)
-  inds2 <- which(mM==ncol(mC))
-  inds <- union(inds1,inds2)
-
-  vs <- seq(1:ncol(x$mX))
-  names(vs) <- vs
-  vs <- vs[-inds]
-
-  mL <- matrix(0,nrow=nrow(x$mX), ncol=ncol(x$mX))
-  colnames(mL)<-paste("Grouping",colnames(x$mX))
-
-  mL[,inds1] <- rep(mC[1,1],nrow(x$mX))
-  mL[,inds2] <- vy
-
-  for(i in vs){
-    part <- mC[,mM[i]]
-    for(j in 1:length(part)){
-      inds=which(vy==j)
-      mL[inds, vs]=part[j]
-    }
-  }
-
-  mJ <- data.frame(Class=vy,x$mX, mL)
-
-  return(mJ)
-
-}
 
 #' @title glimpse multiDA
 #' @rdname multiDA.broom

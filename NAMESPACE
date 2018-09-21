@@ -1,7 +1,6 @@
 S3method(plot,multiDA)
 S3method(predict,multiDA)
 S3method(print,multiDA)
-export(augment_multiDA)
 export(glimpse_multiDA)
 export(multiDA)
 export(rank.multiDA)

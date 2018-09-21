@@ -41,6 +41,14 @@ multiDA <- function(mX,vy, penalty=c("EBIC", "BIC"),
     colnames(mX)<-make.unique(colnames(mX))
   }
 
+  remove <- which(matrixStats::colMads(mX)==0)
+
+  if(length(remove) > 0)
+  {
+    mX <-mX[, -remove]
+    message(length(remove), "uninformative features ignored for classification.")
+  }
+
   # Turn vy into a binary matrix of indicators
   mY <- .vec2mat(vy)
 
@@ -173,7 +181,6 @@ multiDA <- function(mX,vy, penalty=c("EBIC", "BIC"),
   class(obj) <- "multiDA"
   return(obj)
 }
-
 
 
 
