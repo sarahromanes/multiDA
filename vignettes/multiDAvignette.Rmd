@@ -74,12 +74,4 @@ head(tidy_res)
 ```
 
 
-## multiDA "augment" function
-
-Returns a tidy data frame, returning back the original class, matrix of features, augmented with the paritioning of each feature as given by the algorithm. In the spirit of "augment" from the broom package.
-
-```{r}
-augment_res <- augment_multiDA(res)
-dim(augment_res) #twice as long!
-```
 

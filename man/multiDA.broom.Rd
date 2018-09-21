@@ -2,13 +2,10 @@
 % Please edit documentation in R/multiDA.broom.R
 \name{tidy_multiDA}
 \alias{tidy_multiDA}
-\alias{augment_multiDA}
 \alias{glimpse_multiDA}
 \title{multiDA "broom" functions}
 \usage{
 tidy_multiDA(x)
-
-augment_multiDA(x)
 
 glimpse_multiDA(x)
 }
@@ -16,13 +13,9 @@ glimpse_multiDA(x)
 \item{x}{a trained \code{multiDA} object}
 
 \item{x}{a trained \code{multiDA} object}
-
-\item{x}{a trained \code{multiDA} object}
 }
 \value{
 a tidy data frame, with key results from the trained \code{multiDA object}, namely, a data.frame of significant features and their ranks. In the spirit of "tidy" from the broom package.
-
-a tidy data frame, returning back the original class, matrix of features, augmented with the paritioning of each feature as given by the algorithm. In the spirit of "augment" from the broom package.
 
 a one row data frame, with quick summaries from the algorithm. In the spirit of the "glance" function from the broom package.
 }
