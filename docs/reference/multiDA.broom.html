@@ -86,6 +86,12 @@
     <li>
       <a href="../articles/multiDAvignette.html">Vignette for the multiDA package</a>
     </li>
+    <li>
+      <a href="../articles/multiDAvignette_caseStudy.html">Using the multiDA to classify cancer types - a case study</a>
+    </li>
+    <li>
+      <a href="../articles/multiDA_vignette_themodel.html">What does multiDA actually do?</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -117,8 +123,6 @@
 
     <pre class="usage"><span class='fu'>tidy_multiDA</span>(<span class='no'>x</span>)
 
-<span class='fu'>augment_multiDA</span>(<span class='no'>x</span>)
-
 <span class='fu'>glimpse_multiDA</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -132,16 +136,11 @@
       <th>x</th>
       <td><p>a trained <code>multiDA</code> object</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>a trained <code>multiDA</code> object</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a tidy data frame, with key results from the trained <code>multiDA object</code>, namely, a data.frame of significant features and their ranks. In the spirit of "tidy" from the broom package.</p>
-<p>a tidy data frame, returning back the original class, matrix of features, augmented with the paritioning of each feature as given by the algorithm. In the spirit of "augment" from the broom package.</p>
 <p>a one row data frame, with quick summaries from the algorithm. In the spirit of the "glance" function from the broom package.</p>
     
 

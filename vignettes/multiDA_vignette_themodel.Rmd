@@ -1,0 +1,180 @@
+---
+title: "What does multiDA actually do?"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{What does multiDA actually do?}
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+library(ggplot2)
+library(gridExtra)
+
+funcShaded <- function(x,m,s) {
+  y <- dnorm(x, mean = m, sd = s)
+  return(y)
+}
+
+```
+
+
+# The multiDA model
+
+*We illustrate the main workings of the multiDA model in simplicity for this vignette. Please see the pre-print [here](https://arxiv.org/pdf/1807.01422.pdf) for a more detailed exposition.*
+
+## Describing the data
+
+Suppose you have data $\textbf{X}$ of dimension $ n \times p$, with a corresponding response vector $\textbf{y}$ of length $n$ describing class membership for each observation. 
+
+Further suppose, for this example, our response consists of $K=3$ classes, and we wish to describe each feature $j$ by a combination of $1, 2,$ or $3$ Gaussian distributions for each class. How can we do this? Let's consider the cases that can occur for each feature $j$.
+
+### Case 1 - all of the classes can be described by a single Gaussian curve
+
+This corresponds to the case of the feature being non-informative.
+
+```{r, echo=FALSE}
+s_a = 0.15
+m_a =0.4
+
+p5 <- ggplot(data.frame(x = c(-0.2, 1)), aes(x = x)) +
+  stat_function(fun = dnorm, args = list(m_a, s_a),
+                aes(colour = "Groups 1 + 2 + 3"), size = 1.5) +
+  stat_function(fun=funcShaded, args = list(m_a, s_a), geom="area", fill="#1b9e77", alpha=0.5) +
+  scale_x_continuous(name = "Value",
+                     breaks = seq(-0.2, 1, 0.2),
+                     limits=c(-0.2, 1)) +
+  scale_y_continuous(name = "Density") +
+  scale_colour_brewer(palette="Dark2") +
+  labs(colour = "Groups") +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        panel.border = element_blank(),
+        text = element_text(size=13))
+p5
+```
+
+### Case 2 - two of the classes can be combined into a Gaussian curve, the other is left behind (one vs rest)
+
+This corresponds to an informative/significant feature. We can either allow each curve to have different variances (left), or restrict the curves to have equal variances (right).
+
+```{r, echo=FALSE}
+m_a = 0.25
+m_b = 0.5
+
+s_a = 0.15
+s_b = 0.1
+
+p3 <- ggplot(data.frame(x = c(-0.2, 1)), aes(x = x)) +
+  stat_function(fun = dnorm, args = list(m_a, s_a),
+                aes(colour = "Group 1"), size = 1.5) +
+  stat_function(fun = dnorm, args = list(m_b, s_b),
+                aes(colour = "Groups 2 & 3"), size = 1.5) +
+  stat_function(fun=funcShaded, args = list(m_a, s_a), geom="area", fill="#1b9e77", alpha=0.5) +
+  stat_function(fun=funcShaded, args = list(m_b, s_b), geom="area", fill="#d95f02", alpha=0.5) +
+  scale_x_continuous(name = "Value",
+                     breaks = seq(-0.2, 1, 0.2),
+                     limits=c(-0.2, 1)) +
+  scale_y_continuous(name = "Density") +
+  scale_colour_brewer(palette="Dark2") +
+  labs(colour = "Groups") +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        panel.border = element_blank(),
+        text = element_text(size=13))
+
+s_a = 0.15
+s_b = 0.15
+
+p4 <- ggplot(data.frame(x = c(-0.2, 1)), aes(x = x)) +
+  stat_function(fun = dnorm, args = list(m_b, s_a),
+                aes(colour = "Group 2"), size = 1.5) +
+  stat_function(fun = dnorm, args = list(m_a, s_b),
+                aes(colour = "Groups 1 + 3"), size = 1.5) +
+  stat_function(fun=funcShaded, args = list(m_b, s_a), geom="area", fill="#1b9e77", alpha=0.5) +
+  stat_function(fun=funcShaded, args = list(m_a, s_b), geom="area", fill="#d95f02", alpha=0.5) +
+  scale_x_continuous(name = "Value",
+                     breaks = seq(-0.2, 1, 0.2),
+                     limits=c(-0.2, 1)) +
+  scale_y_continuous(name = "Density") +
+  scale_colour_brewer(palette="Dark2") +
+  labs(colour = "Groups") +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        panel.border = element_blank(),
+        text = element_text(size=13))
+
+grid.arrange( p3,p4, ncol=2)
+```
+
+### Case 3 - each of the three classes are distinct.
+
+This corresponds to an informative/significant feature. Again, we can either allow each curve to have different variances (left), or restrict the curves to have equal variances (right).
+
+```{r, echo=FALSE}
+m_a = 0.3
+m_b = 0.4
+m_c = 0.7
+
+s_a = 0.19
+s_b = 0.07
+s_c = 0.1
+
+p1 <- ggplot(data.frame(x = c(-0.2, 1)), aes(x = x)) +
+  stat_function(fun = dnorm, args = list(m_a, s_a),
+                aes(colour = "Group 1"), size = 1.5) +
+  stat_function(fun = dnorm, args = list(m_b, s_b),
+                aes(colour = "Group 2"), size = 1.5) +
+  stat_function(fun = dnorm, args = list(m_c, s_c),
+                aes(colour = "Group 3"), size = 1.5) +
+  stat_function(fun=funcShaded, args = list(m_a, s_a), geom="area", fill="#1b9e77", alpha=0.5) +
+  stat_function(fun=funcShaded, args = list(m_b, s_b), geom="area", fill="#d95f02", alpha=0.5) +
+  stat_function(fun=funcShaded, args = list(m_c, s_c), geom="area", fill="#7570b3", alpha=0.5) +
+  scale_x_continuous(name = "Value",
+                     breaks = seq(-0.2, 1, 0.2),
+                     limits=c(-0.2, 1)) +
+  scale_y_continuous(name = "Density") +
+  scale_colour_brewer(palette="Dark2") +
+  labs(colour = "Groups") +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        panel.border = element_blank(),
+        text = element_text(size=13))
+
+s_a = 0.1
+s_b = 0.1
+s_c = 0.1
+
+p2 <- ggplot(data.frame(x = c(-0.2, 1)), aes(x = x)) +
+  stat_function(fun = dnorm, args = list(m_a, s_a),
+                aes(colour = "Group 1"), size = 1.5) +
+  stat_function(fun = dnorm, args = list(m_b, s_b),
+                aes(colour = "Group 2"), size = 1.5) +
+  stat_function(fun = dnorm, args = list(m_c, s_c),
+                aes(colour = "Group 3"), size = 1.5) +
+  stat_function(fun=funcShaded, args = list(m_a, s_a), geom="area", fill="#1b9e77", alpha=0.5) +
+  stat_function(fun=funcShaded, args = list(m_b, s_b), geom="area", fill="#d95f02", alpha=0.5) +
+  stat_function(fun=funcShaded, args = list(m_c, s_c), geom="area", fill="#7570b3", alpha=0.5) +
+  scale_x_continuous(name = "Value",
+                     breaks = seq(-0.2, 1, 0.2),
+                     limits=c(-0.2, 1)) +
+  scale_y_continuous(name = "Density") +
+  scale_colour_brewer(palette="Dark2") +
+  labs(colour = "Groups") +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        panel.border = element_blank(),
+        text = element_text(size=13))
+
+grid.arrange( p1,p2, ncol=2)
+```
+
+## A Penalised Likelihood Ratio Test to determine appropriate group structure for each feature
+
+The multiDA model uses a penalised likelihood ratio test to determine which group structure as described above best describes each feature. The penalisation process is described in detail in the paper. The two penalty options available for this algorithm are the BIC (Schwarz, 1978), and the Extended BIC (EBIC - Chen and Chen, 2008). The EBIC penalty is the default, and is a stronger (and more appropriate) penalty for high dimensional data.
+
+## Prediction
+
+Assuming a multinomial distribution for the response vector $\textbf{y}$, the multiDA algorithm uses information from a trained model (described above) to predict the probability of class membership for each class for a new datapoint. A probability matrix can be returned, or the value of the most probable class. 

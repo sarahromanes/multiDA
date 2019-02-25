@@ -1,0 +1,42 @@
+---
+title: "Using the multiDA to classify cancer types - a case study"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using the multiDA to classify cancer types - a case study}
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+One particular type of data that is well suited for use by multiDA is microarray data. In this example, we demostrate the power of multiDA in predicting cancer type using the provided `SRBCT` data.
+
+# Small Round Blue Cell Tumors (SRBCT) data
+
+The SRBCT dataset (Khan, 2001) looks at classifying **4 classes** of different childhood tumours sharing similar visual features during routine histology. These classes include Ewing's family of tumours (EWS), neuroblastoma (NB), Burkitt's lymphoma (BL), and rhabdomyosarcoma (RMS). Data was collected from 63 cDNA microarrays, with 1586 features present after filtering for genes with zero median absolute deviation. The data can be accessed by typing `SRBCT`. We assign our feature data to `mX`, and our response data to `vy`.
+
+```{r}
+library(multiDA)
+class(SRBCT)
+
+mX <- SRBCT$mX
+vy <- SRBCT$vy
+```
+
+# Fitting the multiDA model to the SRBCT data
+
+We will fit a multiDA model to describe the group structure for each feature.
+
+```{r}
+res  <- multiDA(mX=mX, vy=vy, penalty="EBIC", equal.var=TRUE, set.options="exhaustive")
+```
+
+- We use the default `EBIC` penalty as we have much more features than observations.
+- We use the option `equal.var = TRUE` to fit a model which assumes each Gaussian curve has the same variance. 
+- The option `set.options = "exhaustive"` tells the multiDA algorithm to consider all 15 options of grouping 4 objects together. If the number of classes is much larger, say 5 or 6, the number of groupings grows rapidly (see Bell Number [here](https://en.wikipedia.org/wiki/Bell_number)), and so another set option may be considered to restrict the number of groupings explored.
+
+# Prediction using the multiDA algorithm
+
+# Exploring the plot functionality
+
+# Using the multiDA "tidy" functions
