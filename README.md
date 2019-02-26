@@ -8,7 +8,9 @@ Overview
 
 **multiDA** is a Discriminant Analysis (DA) algorithm capable for use in high dimensional datasets, providing feature selection through multiple hypothesis testing. This algorithm has minimal tuning parameters, is easy to use, and offers improvement in speed compared to existing DA classifiers.
 
-This package is part of a suite of discriminant analysis packages we have authored for large-scale/complex datasets. See also our package [genDA](https://github.com/sarahromanes/genDA), a statisical ML method for Multi-distributional Discriminant Analysis using Generalised Linear Latent Variable Modelling.
+**See our preprint - availableon arXiv, [here](https://arxiv.org/pdf/1807.01422).**
+
+This package is part of a suite of discriminant analysis packages we have authored for large-scale/complex datasets. See also our package [genDA](http://github.com/sarahromanes/genDA), a statisical ML method for Multi-distributional Discriminant Analysis using Generalised Linear Latent Variable Modelling.
 
 Installation
 --------
@@ -34,6 +36,8 @@ vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
 rser <- sum(vals!=vy)/length(vy)
 
 ```
+
+A case study and overview of the statistical processes behind multiDA can be found [here](https://sarahromanes.github.io/multiDA/articles/multiDAvignette_caseStudy.html).
 
 ## Authors
 
