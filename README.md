@@ -10,7 +10,7 @@ Overview
 
 **See our preprint - available on arXiv, [here](https://arxiv.org/pdf/1807.01422).**
 
-This package is part of a suite of discriminant analysis packages we have authored for large-scale/complex datasets. See also our package [genDA](http://github.com/sarahromanes/genDA), a statisical ML method for Multi-distributional Discriminant Analysis using Generalised Linear Latent Variable Modelling.
+This package is part of a suite of discriminant analysis packages we have authored for large-scale/complex datasets. See also our package [genDA](http://github.com/sarahromanes/genDA), a statistical ML method for Multi-distributional Discriminant Analysis using Generalised Linear Latent Variable Modelling.
 
 Installation
 --------
