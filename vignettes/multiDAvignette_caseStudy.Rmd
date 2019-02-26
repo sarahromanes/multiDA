@@ -17,7 +17,7 @@ The SRBCT dataset (Khan, 2001) looks at classifying **4 classes** of different c
 
 ```{r}
 library(multiDA)
-class(SRBCT)
+summary(SRBCT)
 
 mX <- SRBCT$mX
 vy <- SRBCT$vy
@@ -33,10 +33,65 @@ res  <- multiDA(mX=mX, vy=vy, penalty="EBIC", equal.var=TRUE, set.options="exhau
 
 - We use the default `EBIC` penalty as we have much more features than observations.
 - We use the option `equal.var = TRUE` to fit a model which assumes each Gaussian curve has the same variance. 
-- The option `set.options = "exhaustive"` tells the multiDA algorithm to consider all 15 options of grouping 4 objects together. If the number of classes is much larger, say 5 or 6, the number of groupings grows rapidly (see Bell Number [here](https://en.wikipedia.org/wiki/Bell_number)), and so another set option may be considered to restrict the number of groupings explored.
+- The option `set.options = "exhaustive"` tells the multiDA algorithm to consider all 15 options of grouping 4 objects together (see *What does multiDA actually do?* [here](https://sarahromanes.github.io/multiDA/articles/multiDA_vignette_themodel.html) for describing possible group structures). If the number of classes is much larger, say 5 or 6, the number of groupings grows rapidly (see Bell Number [here](https://en.wikipedia.org/wiki/Bell_number)), and so another set option may be considered to restrict the number of groupings explored. 
 
-# Prediction using the multiDA algorithm
+We can explore the results of the multiDA model using the `print()` function:
+
+```{r}
+print(res)
+```
+
+The key information returned to us is that 215 of the 1586 are deemed significant, with high `gamma.hat` values inndicating a higher probablity of membership to a particular partitioning. For example, for the most significant feature V1172, there is a 0.999 chance that it is described by partition 8, which, looking at the Partition Matrix output, consists of classes 1 and 3 described by a Gaussian curve, and classes 2 and 4 explained by a Gaussian curve (2 cueves altogether).
+
+A low top value of `gamma.hat` indicates high uncertainty in model fit even for the most significant features - and in such a case another ML algorithm should be considered. 
 
 # Exploring the plot functionality
 
+We can visualise the paritioning of the classes within each feature using the `plot()` method for multiDA. By default, the plot function plots the top 10 ranked features. If `ranked=FALSE, then the user can specify which features to be plotted (specified by column names).
+
+```{r}
+plot(res, ranks = 1)
+```
+
+An example using specified features:
+```{r}
+plot(res, ranked=FALSE, features = c("V22"))
+```
+
+# Prediction using the multiDA algorithm
+
+If we want to predict class labels, we can use the `predict` function in order to do so. In this case, we will find the resubstitution error rate for this dataset using the multiDA algorithm. We can either extract the probability of class membership for each point (`$probabilities`) or we can directly extract class membership prediction (which class had the max probability) using `$vy.pred`.
+
+```{r}
+prediction <- predict(res, newdata=mX)
+
+head(prediction$probabilities)
+head(prediction$vy.pred)
+
+vals <- prediction$vy.pred 
+rser <- sum(vals!=vy)/length(vy)
+rser
+```
+
+
 # Using the multiDA "tidy" functions
+
+Tidy functions have been created for ease of use - namely `glimpse_multiDA()` and `tidy_multiDA()`, both of which take a trained multiDA object (in this case, `res`) as function input.
+
+### multiDA “glimpse” function
+
+This function returns a one row data frame, with quick summaries from the algorithm. In the spirit of the “glance” function from the `broom` package.
+
+```{r}
+glimpse_multiDA(res)
+```
+
+### multiDA “tidy” function
+
+This returns a tidy data frame, with key results from the trained multiDA object, namely, a `data.frame` of significant features and their ranks. In the spirit of “tidy” from the `broom` package.
+
+```{r}
+tidy_res <- tidy_multiDA(res)
+head(tidy_res)
+```
+
