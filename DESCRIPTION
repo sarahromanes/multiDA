@@ -13,7 +13,8 @@ Imports:
     matrixStats,
     ggplot2,
     purrr,
-    arrayhelpers
+    arrayhelpers,
+    gridExtra
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 
