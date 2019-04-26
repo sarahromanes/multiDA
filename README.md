@@ -2,6 +2,7 @@ multiDA <img src="man/figures/test_logo.png" align="right"  height="250" width="
 ======================================================
 
 High Dimensional Discriminant Analysis using Multiple Hypothesis Testing
+[![Build Status](https://travis-ci.org/sarahromanes/multiDA.svg?branch=master)](https://travis-ci.org/sarahromanes/multiDA)
 
 Overview
 --------
