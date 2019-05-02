@@ -21,6 +21,19 @@
 
 #' @rdname multiDA
 #' @export
+#' @importFrom stats qchisq
+#' @importFrom ggplot2  ggplot
+#' @importFrom ggplot2  aes
+#' @importFrom ggplot2  ggtitle
+#' @importFrom ggplot2  geom_density
+#' @importFrom ggplot2  ggsave
+#' @importFrom ggplot2  scale_colour_brewer
+#' @importFrom ggplot2  scale_fill_brewer
+#' @importFrom ggplot2  theme
+#' @importFrom ggplot2  element_text
+#' @importFrom purrr  map
+#' @importFrom purrr  map_chr
+#' @importFrom arrayhelpers  vec2array
 
 multiDA <- function(mX,vy, penalty=c("EBIC", "BIC"),
                   equal.var=TRUE, set.options=c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"), sUser=NULL){

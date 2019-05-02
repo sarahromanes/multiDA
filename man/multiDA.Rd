@@ -9,10 +9,11 @@
 \title{multiDA}
 \usage{
 multiDA(mX, vy, penalty = c("EBIC", "BIC"), equal.var = TRUE,
-  set.options = c("exhaustive", "onevsrest", "onevsall", "ordinal", "user"),
-  sUser = NULL)
+  set.options = c("exhaustive", "onevsrest", "onevsall", "ordinal",
+  "user"), sUser = NULL)
 
-\method{plot}{multiDA}(x, ranked = TRUE, ranks = 1:10, features = NULL)
+\method{plot}{multiDA}(x, ranked = TRUE, ranks = 1:10,
+  features = NULL)
 
 \method{predict}{multiDA}(object, newdata, ...)
 
@@ -56,10 +57,6 @@ list predicted class memberships of each row in newdata
 }
 \description{
 the multiDA function
-
-plot ranked features from a trained multiDA object
-
-multiDA prediction of the class membership of a matrix of new observations.
 
 Summarizes the trained multiDA classifier in a nice manner. User can select number of features to summarise
 }

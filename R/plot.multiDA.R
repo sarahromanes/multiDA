@@ -57,7 +57,8 @@ plot.multiDA<-function(x, ranked=TRUE, ranks=1:10, features=NULL){
     p1 <-ggplot2::ggplot(data[[r]],aes(x=value, fill=grouping, color=grouping)) + geom_density(alpha=0.25) +
       ggtitle(paste("Feature:", mR$feature.ID[r], ", Rank:", mR$rank[r], ", gamma.hat=",signif(mR$gamma.hat[r],4)))+
       scale_colour_brewer(palette="Dark2")+
-      scale_fill_brewer(palette="Dark2")
+      scale_fill_brewer(palette="Dark2") +
+      theme(text = element_text(size=16))
     print(p1)
     }
 
