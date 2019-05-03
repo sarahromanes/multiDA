@@ -13,14 +13,14 @@ One particular type of data that is well suited for use by multiDA is microarray
 
 # Small Round Blue Cell Tumors (SRBCT) data
 
-The SRBCT dataset (Khan, 2001) looks at classifying **4 classes** of different childhood tumours sharing similar visual features during routine histology. These classes include Ewing's family of tumours (EWS), neuroblastoma (NB), Burkitt's lymphoma (BL), and rhabdomyosarcoma (RMS). Data was collected from 63 cDNA microarrays, with 1586 features present after filtering for genes with zero median absolute deviation. The data can be accessed by typing `SRBCT`. We assign our feature data to `mX`, and our response data to `vy`.
+The SRBCT dataset (Khan, 2001) looks at classifying **4 classes** of different childhood tumours sharing similar visual features during routine histology. These classes include Ewing's family of tumours (EWS), neuroblastoma (NB), Burkitt's lymphoma (BL), and rhabdomyosarcoma (RMS). Data was collected from 63 cDNA microarrays, with 1586 features present after filtering for genes with zero median absolute deviation. The data can be accessed by typing `SRBCT`. We assign our feature data to `X`, and our response data to `y`.
 
 ```{r}
 library(multiDA)
 summary(SRBCT)
 
-mX <- SRBCT$mX
-vy <- SRBCT$vy
+X <- SRBCT$X
+y <- SRBCT$y
 ```
 
 # Fitting the multiDA model to the SRBCT data
@@ -28,7 +28,7 @@ vy <- SRBCT$vy
 We will fit a multiDA model to describe the group structure for each feature.
 
 ```{r}
-res  <- multiDA(mX=mX, vy=vy, penalty="EBIC", equal.var=TRUE, set.options="exhaustive")
+res  <- multiDA(X=X, y=y, penalty="EBIC", equal.var=TRUE, set.options="exhaustive")
 ```
 
 - We use the default `EBIC` penalty as we have much more features than observations.
@@ -60,16 +60,16 @@ plot(res, ranked=FALSE, features = c("V22"))
 
 # Prediction using the multiDA algorithm
 
-If we want to predict class labels, we can use the `predict` function in order to do so. In this case, we will find the resubstitution error rate for this dataset using the multiDA algorithm. We can either extract the probability of class membership for each point (`$probabilities`) or we can directly extract class membership prediction (which class had the max probability) using `$vy.pred`.
+If we want to predict class labels, we can use the `predict` function in order to do so. In this case, we will find the resubstitution error rate for this dataset using the multiDA algorithm. We can either extract the probability of class membership for each point (`$probabilities`) or we can directly extract class membership prediction (which class had the max probability) using `$y.pred`.
 
 ```{r}
-prediction <- predict(res, newdata=mX)
+prediction <- predict(res, newdata=X)
 
 head(prediction$probabilities)
-head(prediction$vy.pred)
+head(prediction$y.pred)
 
-vals <- prediction$vy.pred 
-rser <- sum(vals!=vy)/length(vy)
+vals <- prediction$y.pred 
+rser <- sum(vals!=y)/length(y)
 rser
 ```
 

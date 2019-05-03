@@ -42,10 +42,10 @@ plot.multiDA<-function(x, ranked=TRUE, ranks=1:10, features=NULL){
   for(j in inds){
     vs <- x$mS[,mR$partition[j]]
     vc <- mC[,mR$partition[j]]
-    vy <- .mat2vec(x$mY)
-    grouping <- vc[vy]
-    value <- x$mX[, as.character(mR$feature.ID[j])]
-    rank.feature <- rep(j, length(vy))
+    y <- .mat2vec(x$mY)
+    grouping <- vc[y]
+    value <- x$X[, as.character(mR$feature.ID[j])]
+    rank.feature <- rep(j, length(y))
     dat <- data.frame(value, grouping, rank.feature)
     data[[j]] <- dat
   }
