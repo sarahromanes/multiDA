@@ -47,11 +47,11 @@ predict.multiDA <-function(object, newdata, ...){
   for (i in 1:n.test)
   {
     vx <- matrix(newdata[i, ], object$p, 1)
-    mX.til <- vx %*% matrix(1, 1, object$V)
+    X.til <- vx %*% matrix(1, 1, object$V)
     for (k in 1:object$K)
     {
       mMu <- object$res$mMu[, ind.mat[k, ]]
-      mD <- mX.til - mMu
+      mD <- X.til - mMu
       if (!object$equal.var) {
         # multiQDA
         mSig2 <- object$res$mSigma2[, ind.mat[k, ]]
@@ -65,14 +65,14 @@ predict.multiDA <-function(object, newdata, ...){
   }
 
   mY.hat<- .logMatToGamma(mEta.y)
-  vy.pred <- apply(mY.hat, 1, which.max)
+  y.pred <- apply(mY.hat, 1, which.max)
 
   if(object$fac.input){
-    vy.fac <- object$vy.fac
-    vy.pred<-as.factor(purrr::map_chr(vy.pred, .num.2.fac,vy.fac))
+    y.fac <- object$y.fac
+    y.pred<-as.factor(purrr::map_chr(y.pred, .num.2.fac,y.fac))
   }
 
-  return(list(vy.pred = vy.pred, probabilities=mY.hat))
+  return(list(y.pred = y.pred, probabilities=mY.hat))
 
 }
 

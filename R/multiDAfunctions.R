@@ -9,13 +9,13 @@
 
 ###############################################################
 
-.vec2mat <- function(vy) {
-  vy=as.numeric(vy)
-  K <- length(unique(vy))
-  n <- length(vy)
+.vec2mat <- function(y) {
+  y=as.numeric(y)
+  K <- length(unique(y))
+  n <- length(y)
   mY <- matrix(0, nrow = n, ncol = K)
-  for (i in 1:length(vy)) {
-    val <- vy[i]
+  for (i in 1:length(y)) {
+    val <- y[i]
     mY[i, val] <- 1
   }
   return(mY)
@@ -187,9 +187,9 @@
 
 ##############################################################
 
-.num.2.fac=function(x, vy.fac){
-  dat <- as.numeric(unique(vy.fac))
-  names(dat) <- unique(vy.fac)
+.num.2.fac=function(x, y.fac){
+  dat <- as.numeric(unique(y.fac))
+  names(dat) <- unique(y.fac)
   val=names(which(dat==x))
   return(val)
 }
@@ -210,8 +210,8 @@
       for(i in 1:length(inds)){
 
         if(x$fac.input){
-          vy.fac <- x$vy.fac
-          labels<-purrr::map_chr(inds, .num.2.fac, vy.fac)
+          y.fac <- x$y.fac
+          labels<-purrr::map_chr(inds, .num.2.fac, y.fac)
         }else{
           labels<-inds
         }
