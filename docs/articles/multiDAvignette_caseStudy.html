@@ -87,26 +87,26 @@
 <h1 class="hasAnchor">
 <a href="#small-round-blue-cell-tumors-srbct-data" class="anchor"></a>Small Round Blue Cell Tumors (SRBCT) data</h1>
 <p>The SRBCT dataset (Khan, 2001) looks at classifying <strong>4 classes</strong> of different childhood tumours sharing similar visual features during routine histology. These classes include Ewing’s family of tumours (EWS), neuroblastoma (NB), Burkitt’s lymphoma (BL), and rhabdomyosarcoma (RMS). Data was collected from 63 cDNA microarrays, with 1586 features present after filtering for genes with zero median absolute deviation. The data can be accessed by typing <code>SRBCT</code>. We assign our feature data to <code>mX</code>, and our response data to <code>vy</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(multiDA)
-<span class="kw">summary</span>(SRBCT)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(multiDA)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">summary</span>(SRBCT)</a></code></pre></div>
 <pre><code>##    Length Class  Mode   
 ## mX 99918  -none- numeric
 ## vy    63  factor numeric</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mX &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>mX
-vy &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>vy</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">mX &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>mX</a>
+<a class="sourceLine" id="cb3-2" title="2">vy &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>vy</a></code></pre></div>
 </div>
 <div id="fitting-the-multida-model-to-the-srbct-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#fitting-the-multida-model-to-the-srbct-data" class="anchor"></a>Fitting the multiDA model to the SRBCT data</h1>
 <p>We will fit a multiDA model to describe the group structure for each feature.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multiDA.html">multiDA</a></span>(<span class="dt">mX=</span>mX, <span class="dt">vy=</span>vy, <span class="dt">penalty=</span><span class="st">"EBIC"</span>, <span class="dt">equal.var=</span><span class="ot">TRUE</span>, <span class="dt">set.options=</span><span class="st">"exhaustive"</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">res  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multiDA.html">multiDA</a></span>(<span class="dt">mX=</span>mX, <span class="dt">vy=</span>vy, <span class="dt">penalty=</span><span class="st">"EBIC"</span>, <span class="dt">equal.var=</span><span class="ot">TRUE</span>, <span class="dt">set.options=</span><span class="st">"exhaustive"</span>)</a></code></pre></div>
 <ul>
 <li>We use the default <code>EBIC</code> penalty as we have much more features than observations.</li>
 <li>We use the option <code>equal.var = TRUE</code> to fit a model which assumes each Gaussian curve has the same variance.</li>
 <li>The option <code>set.options = "exhaustive"</code> tells the multiDA algorithm to consider all 15 options of grouping 4 objects together (see <em>What does multiDA actually do?</em> <a href="https://sarahromanes.github.io/multiDA/articles/multiDA_vignette_themodel.html">here</a> for describing possible group structures). If the number of classes is much larger, say 5 or 6, the number of groupings grows rapidly (see Bell Number <a href="https://en.wikipedia.org/wiki/Bell_number">here</a>), and so another set option may be considered to restrict the number of groupings explored.</li>
 </ul>
 <p>We can explore the results of the multiDA model using the <code>print()</code> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(res)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">print</span>(res)</a></code></pre></div>
 <pre><code>## Sample Size:
 ## [1] 63
 ## Number of Features:
@@ -148,19 +148,19 @@ vy &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>vy</code></pre></
 <h1 class="hasAnchor">
 <a href="#exploring-the-plot-functionality" class="anchor"></a>Exploring the plot functionality</h1>
 <p>We can visualise the paritioning of the classes within each feature using the <code>plot()</code> method for multiDA. By default, the plot function plots the top 10 ranked features. If `ranked=FALSE, then the user can specify which features to be plotted (specified by column names).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(res, <span class="dt">ranks =</span> <span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">plot</span>(res, <span class="dt">ranks =</span> <span class="dv">1</span>)</a></code></pre></div>
 <p><img src="multiDAvignette_caseStudy_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>An example using specified features:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(res, <span class="dt">ranked=</span><span class="ot">FALSE</span>, <span class="dt">features =</span> <span class="kw">c</span>(<span class="st">"V22"</span>))</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">plot</span>(res, <span class="dt">ranked=</span><span class="ot">FALSE</span>, <span class="dt">features =</span> <span class="kw">c</span>(<span class="st">"V22"</span>))</a></code></pre></div>
 <p><img src="multiDAvignette_caseStudy_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div id="prediction-using-the-multida-algorithm" class="section level1">
 <h1 class="hasAnchor">
 <a href="#prediction-using-the-multida-algorithm" class="anchor"></a>Prediction using the multiDA algorithm</h1>
 <p>If we want to predict class labels, we can use the <code>predict</code> function in order to do so. In this case, we will find the resubstitution error rate for this dataset using the multiDA algorithm. We can either extract the probability of class membership for each point (<code>$probabilities</code>) or we can directly extract class membership prediction (which class had the max probability) using <code>$vy.pred</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prediction &lt;-<span class="st"> </span><span class="kw">predict</span>(res, <span class="dt">newdata=</span>mX)
-
-<span class="kw">head</span>(prediction<span class="op">$</span>probabilities)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">prediction &lt;-<span class="st"> </span><span class="kw">predict</span>(res, <span class="dt">newdata=</span>mX)</a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="kw">head</span>(prediction<span class="op">$</span>probabilities)</a></code></pre></div>
 <pre><code>##               [,1] [,2]          [,3]         [,4]
 ## [1,] 1.908807e-135    1  1.336194e-99 2.596398e-68
 ## [2,] 1.214488e-123    1  3.550677e-80 8.116775e-55
@@ -168,12 +168,12 @@ vy &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>vy</code></pre></
 ## [4,] 1.601513e-108    1  3.320017e-67 3.077376e-35
 ## [5,] 1.860622e-157    1 7.604828e-114 4.035431e-64
 ## [6,] 1.469110e-171    1 5.841163e-129 1.691079e-80</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(prediction<span class="op">$</span>vy.pred)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">head</span>(prediction<span class="op">$</span>vy.pred)</a></code></pre></div>
 <pre><code>## [1] 2 2 2 2 2 2
 ## Levels: 1 2 3 4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vals &lt;-<span class="st"> </span>prediction<span class="op">$</span>vy.pred 
-rser &lt;-<span class="st"> </span><span class="kw">sum</span>(vals<span class="op">!=</span>vy)<span class="op">/</span><span class="kw">length</span>(vy)
-rser</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">vals &lt;-<span class="st"> </span>prediction<span class="op">$</span>vy.pred </a>
+<a class="sourceLine" id="cb13-2" title="2">rser &lt;-<span class="st"> </span><span class="kw">sum</span>(vals<span class="op">!=</span>vy)<span class="op">/</span><span class="kw">length</span>(vy)</a>
+<a class="sourceLine" id="cb13-3" title="3">rser</a></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 </div>
 <div id="using-the-multida-tidy-functions" class="section level1">
@@ -184,7 +184,7 @@ rser</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#multida-glimpse-function" class="anchor"></a>multiDA “glimpse” function</h3>
 <p>This function returns a one row data frame, with quick summaries from the algorithm. In the spirit of the “glance” function from the <code>broom</code> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/multiDA.broom.html">glimpse_multiDA</a></span>(res)</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="../reference/multiDA.broom.html">glimpse_multiDA</a></span>(res)</a></code></pre></div>
 <pre><code>##   Classes Number.of.Partitions Number.of.Signficant.Features Top.Gamma
 ## 1       4                   15                          1586 0.9997741</code></pre>
 </div>
@@ -192,8 +192,8 @@ rser</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#multida-tidy-function" class="anchor"></a>multiDA “tidy” function</h3>
 <p>This returns a tidy data frame, with key results from the trained multiDA object, namely, a <code>data.frame</code> of significant features and their ranks. In the spirit of “tidy” from the <code>broom</code> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multiDA.broom.html">tidy_multiDA</a></span>(res)
-<span class="kw">head</span>(tidy_res)</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">tidy_res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multiDA.broom.html">tidy_multiDA</a></span>(res)</a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="kw">head</span>(tidy_res)</a></code></pre></div>
 <pre><code>##   rank feature.ID gamma.hat partition
 ## 1    1      V1172 0.9997741         8
 ## 2    2      V1232 0.9997576         4

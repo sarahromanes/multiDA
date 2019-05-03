@@ -31,11 +31,11 @@ Usage
 The following example trains the multiDA classifier using the SRBCT dataset, and finds the resubstitution error rate. 
 
 ```r
-vy   <- SRBCT$vy
-mX   <- SRBCT$mX
-res  <- multiDA(mX, vy, penalty="EBIC", equal.var=TRUE, set.options="exhaustive")
-vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
-rser <- sum(vals!=vy)/length(vy)
+y   <- SRBCT$y
+X   <- SRBCT$X
+res  <- multiDA(X, y, penalty="EBIC", equal.var=TRUE, set.options="exhaustive")
+vals <- predict(res, newdata=X)$y.pred          #y.pred returns class labels
+rser <- sum(vals!=y)/length(y)
 
 ```
 

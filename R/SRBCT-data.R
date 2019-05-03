@@ -8,7 +8,7 @@
 #'
 #' @usage data(SRBCT)
 #'
-#' @format An list containing class labels \code{vy} and corresponding microarray measurements \code{mX}
+#' @format An list containing class labels \code{y} and corresponding microarray measurements \code{X}
 #'
 #' @keywords datasets
 #'
@@ -19,7 +19,7 @@
 #'
 #' @examples
 #' data(SRBCT)
-#' vy <- SRBCT$vy
-#' mX <- SRBCT$mX
+#' y <- SRBCT$y
+#' X <- SRBCT$X
 
 "SRBCT"
