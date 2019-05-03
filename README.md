@@ -1,4 +1,5 @@
-multiDA [![Build Status](https://travis-ci.org/sarahromanes/multiDA.svg?branch=master)](https://travis-ci.org/sarahromanes/multiDA) http://www.r-pkg.org/badges/version/{multiDA}
+multiDA [![Build Status](https://travis-ci.org/sarahromanes/multiDA.svg?branch=master)](https://travis-ci.org/sarahromanes/multiDA)
+[![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) 
   <img src="man/figures/test_logo.png" align="right"  height="250" width="250"/>
 ======================================================
 
