@@ -1,4 +1,4 @@
-multiDA [![Build Status](https://travis-ci.org/sarahromanes/multiDA.svg?branch=master)](https://travis-ci.org/sarahromanes/multiDA)
+multiDA [![Build Status](https://travis-ci.org/sarahromanes/multiDA.svg?branch=master)](https://travis-ci.org/sarahromanes/multiDA) http://www.r-pkg.org/badges/version/{multiDA}
   <img src="man/figures/test_logo.png" align="right"  height="250" width="250"/>
 ======================================================
 
