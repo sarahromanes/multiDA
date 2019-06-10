@@ -58,6 +58,7 @@ plot.multiDA<-function(x, ranked=TRUE, ranks=1:10, features=NULL){
       ggtitle(paste("Feature:", mR$feature.ID[r], ", Rank:", mR$rank[r], ", gamma.hat=",signif(mR$gamma.hat[r],4)))+
       scale_colour_brewer(palette="Dark2")+
       scale_fill_brewer(palette="Dark2") +
+      theme_bw() +
       theme(text = element_text(size=16))
     print(p1)
     }
