@@ -8,7 +8,7 @@
 \alias{print.multiDA}
 \title{multiDA}
 \usage{
-multiDA(mX, vy, penalty = c("EBIC", "BIC"), equal.var = TRUE,
+multiDA(X, y, penalty = c("EBIC", "BIC"), equal.var = TRUE,
   set.options = c("exhaustive", "onevsrest", "onevsall", "ordinal",
   "user"), sUser = NULL)
 
@@ -20,9 +20,9 @@ multiDA(mX, vy, penalty = c("EBIC", "BIC"), equal.var = TRUE,
 \method{print}{multiDA}(x, max.rank = 10, ...)
 }
 \arguments{
-\item{mX}{matrix containing the training data. The rows are the sample observations, and the columns are the features.}
+\item{X}{matrix containing the training data. The rows are the sample observations, and the columns are the features.}
 
-\item{vy}{vector of class values (for training)}
+\item{y}{vector of class values (for training)}
 
 \item{penalty}{default is in the form of the EBIC, which penalises based on the number of features. If option \code{penalty="BIC"} is specified, the penalty reverts back to the BIC.}
 
@@ -63,9 +63,9 @@ Summarizes the trained multiDA classifier in a nice manner. User can select numb
 \examples{
 #train the multiDA classifier using the SRBCT dataset, and find the resubstitution error rate
 
-vy   <- SRBCT$vy
-mX   <- SRBCT$mX
-res  <- multiDA(mX, vy, equal.var=TRUE, set.options="exhaustive", penalty="EBIC")
-vals <- predict(res, newdata=mX)$vy.pred          #vy.pred returns class labels
-rser <- sum(vals!=vy)/length(vy)
+y   <- SRBCT$y
+X   <- SRBCT$X
+res  <- multiDA(X, y, equal.var=TRUE, set.options="exhaustive", penalty="EBIC")
+vals <- predict(res, newdata=X)$y.pred          #y.pred returns class labels
+rser <- sum(vals!=y)/length(y)
 }

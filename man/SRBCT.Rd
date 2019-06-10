@@ -4,7 +4,7 @@
 \name{SRBCT}
 \alias{SRBCT}
 \title{Small round blue cell tumors (SRBCTs) microarray data}
-\format{An list containing class labels \code{vy} and corresponding microarray measurements \code{mX}}
+\format{An list containing class labels \code{y} and corresponding microarray measurements \code{X}}
 \source{
 \href{http://www.biolab.si/supp/bi-cancer/projections/info/SRBCT.html}{Biolab}
 }
@@ -19,8 +19,8 @@ filtering for genes with zero Median Absolute Deviation. Further, we standardise
 }
 \examples{
 data(SRBCT)
-vy <- SRBCT$vy
-mX <- SRBCT$mX
+y <- SRBCT$y
+X <- SRBCT$X
 }
 \references{
 Khan et al. (2001) Nature Medicine 7:673 EP

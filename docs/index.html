@@ -71,33 +71,33 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    <div id="multida" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#multida" class="anchor"></a>multiDA <img src="reference/figures/test_logo.png" align="right" height="250" width="250">
-</h1></div>
+    
+<p>multiDA <a href="https://travis-ci.org/sarahromanes/multiDA"><img src="https://travis-ci.org/sarahromanes/multiDA.svg?branch=master" alt="Build Status"></a> <a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg"></a> <img src="reference/figures/test_logo.png" align="right" height="250" width="250"> ======================================================</p>
 <p>High Dimensional Discriminant Analysis using Multiple Hypothesis Testing</p>
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p><strong>multiDA</strong> is a Discriminant Analysis (DA) algorithm capable for use in high dimensional datasets, providing feature selection through multiple hypothesis testing. This algorithm has minimal tuning parameters, is easy to use, and offers improvement in speed compared to existing DA classifiers.</p>
-<p>This package is part of a suite of discriminant analysis packages we have authored for large-scale/complex datasets. See also our package <a href="https://github.com/sarahromanes/genDA">genDA</a>, a statisical ML method for Multi-distributional Discriminant Analysis using Generalised Linear Latent Variable Modelling.</p>
+<p><strong>Publication to appear in JCGS. See our preprint - available on arXiv, <a href="https://arxiv.org/pdf/1807.01422">here</a>.</strong></p>
+<p>This package is part of a suite of discriminant analysis packages we have authored for large-scale/complex datasets. See also our package <a href="http://github.com/sarahromanes/genDA">genDA</a>, a statistical ML method for Multi-distributional Discriminant Analysis using Generalised Linear Latent Variable Modelling.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install the development version from GitHub:</span>
-<span class="co"># install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"sarahromanes/multiDA"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Install the development version from GitHub:</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb1-3" title="3">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"sarahromanes/multiDA"</span>)</a></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p>The following example trains the multiDA classifier using the SRBCT dataset, and finds the resubstitution error rate.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vy   &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>vy
-mX   &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>mX
-res  &lt;-<span class="st"> </span><span class="kw"><a href="reference/multiDA.html">multiDA</a></span>(mX, vy, <span class="dt">penalty=</span><span class="st">"EBIC"</span>, <span class="dt">equal.var=</span><span class="ot">TRUE</span>, <span class="dt">set.options=</span><span class="st">"exhaustive"</span>)
-vals &lt;-<span class="st"> </span><span class="kw">predict</span>(res, <span class="dt">newdata=</span>mX)<span class="op">$</span>vy.pred          <span class="co">#vy.pred returns class labels</span>
-rser &lt;-<span class="st"> </span><span class="kw">sum</span>(vals<span class="op">!=</span>vy)<span class="op">/</span><span class="kw">length</span>(vy)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">y   &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>y</a>
+<a class="sourceLine" id="cb2-2" title="2">X   &lt;-<span class="st"> </span>SRBCT<span class="op">$</span>X</a>
+<a class="sourceLine" id="cb2-3" title="3">res  &lt;-<span class="st"> </span><span class="kw"><a href="reference/multiDA.html">multiDA</a></span>(X, y, <span class="dt">penalty=</span><span class="st">"EBIC"</span>, <span class="dt">equal.var=</span><span class="ot">TRUE</span>, <span class="dt">set.options=</span><span class="st">"exhaustive"</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4">vals &lt;-<span class="st"> </span><span class="kw">predict</span>(res, <span class="dt">newdata=</span>X)<span class="op">$</span>y.pred          <span class="co">#y.pred returns class labels</span></a>
+<a class="sourceLine" id="cb2-5" title="5">rser &lt;-<span class="st"> </span><span class="kw">sum</span>(vals<span class="op">!=</span>y)<span class="op">/</span><span class="kw">length</span>(y)</a></code></pre></div>
+<p>A case study and overview of the statistical processes behind multiDA can be found <a href="https://sarahromanes.github.io/multiDA/articles/multiDAvignette_caseStudy.html">here</a>.</p>
 </div>
 <div id="authors" class="section level2">
 <h2 class="hasAnchor">
@@ -114,14 +114,14 @@ rser &lt;-<span class="st"> </span><span class="kw">sum</span>(vals<span class="
 <div id="license" class="section level2">
 <h2 class="hasAnchor">
 <a href="#license" class="anchor"></a>License</h2>
-<p>This project is licensed under the GPL-2 license - see the <a href="LICENSE.html" class="uri">LICENSE.md</a> file for details</p>
+<p>This project is licensed under the GPL-2 license - see the <a href="LICENSE.html">LICENSE.md</a> file for details</p>
 </div>
 <div id="acknowledgements" class="section level2">
 <h2 class="hasAnchor">
 <a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
 <p>I am grateful to everyone who has provided thoughtful and helpful comments to support me building my first package - especially members of the Sydney University Statistical Bioinformatics group and also the NUMBATS group at Monash University. You guys rock!</p>
 </div>
-</div>
+
   </div>
 
   <div class="col-md-3" id="sidebar">

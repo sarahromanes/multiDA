@@ -29,7 +29,7 @@ rank.multiDA<-function(x, G){
 
     mC=as.matrix(.labelPartitions(x)[,inds])
 
-    dRank=data.frame("Rank"=c(1:d),"Gamma Est"=mGam_sub[as.numeric(names(r.gam))], "Feature" = colnames(x$mX)[as.numeric(names(r.gam))], "Partition"= rep(inds,d), "No.Groups"=rep(G, d))
+    dRank=data.frame("Rank"=c(1:d),"Gamma Est"=mGam_sub[as.numeric(names(r.gam))], "Feature" = colnames(x$X)[as.numeric(names(r.gam))], "Partition"= rep(inds,d), "No.Groups"=rep(G, d))
   }else{
 
     d=dim(mGam_sub)
@@ -70,7 +70,7 @@ rank.multiDA<-function(x, G){
 
   }
 
-    dRank=data.frame("Rank"=c(1:nrow(coord)),"Gamma Est"=mGam_sub[coord], "Feature" = colnames(x$mX)[coord[,1]], "Partition"= as.numeric(unlist(lapply(strsplit(colnames(mC)[coord[,2]], " "), function(x) x[2]))), "No.Groups"=c(rep(G, nrow(coord))))
+    dRank=data.frame("Rank"=c(1:nrow(coord)),"Gamma Est"=mGam_sub[coord], "Feature" = colnames(x$X)[coord[,1]], "Partition"= as.numeric(unlist(lapply(strsplit(colnames(mC)[coord[,2]], " "), function(x) x[2]))), "No.Groups"=c(rep(G, nrow(coord))))
   }
 
   return(dRank)
