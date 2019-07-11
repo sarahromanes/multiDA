@@ -31,6 +31,7 @@
 #' @importFrom ggplot2  scale_fill_brewer
 #' @importFrom ggplot2  theme
 #' @importFrom ggplot2  element_text
+#' @importFrom ggplot2  theme_bw
 #' @importFrom purrr  map
 #' @importFrom purrr  map_chr
 #' @importFrom arrayhelpers  vec2array
